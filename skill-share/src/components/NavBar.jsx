@@ -7,6 +7,13 @@ import more from '../assets/icons/more.png'
 import './NavBar.css'
 import { useParams } from 'react-router-dom'
 
+/**
+ * Add additional functionality to NavBar such as:
+ * - Display user's name if logged in
+ * - Display user profile picture if logged in
+ * - Link to proper pages
+ */
+
 function NavBar() {
     const { username } = useParams();
 
