@@ -1,19 +1,7 @@
-import reactLogo from './assets/react.svg'
-import './App.css'
+import Login from "./pages/Login.jsx";
 
 function App() {
-  return (
-    <>
-      <div>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p className="read-the-docs">
-        Nothing on our page yet!
-      </p>
-    </>
-  )
+  return <Login />;
 }
 
-export default App
+export default App;
