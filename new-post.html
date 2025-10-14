@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skill Swap - New Post</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2 class="logo">Skill<br>Swap</h2>
+      <nav>
+        <ul>
+          <li><i class="icon">🏠</i> Home</li>
+          <li><i class="icon">🔍</i> Search</li>
+          <li class="active"><i class="icon">➕</i> Create</li>
+          <li><i class="icon">💬</i> Messages</li>
+          <li><i class="icon">👤</i> [username]</li>
+        </ul>
+      </nav>
+      <div class="more">
+        <i class="icon">☰</i> More
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <h1 class="title">New Post</h1>
+
+      <div class="post-container">
+        <button class="circle-btn">Skills<br>Overview</button>
+
+        <div class="image-section">
+          <label for="imageUpload" class="image-placeholder">
+            <input type="file" id="imageUpload" accept="image/*" hidden />
+            <span>Click to upload image</span>
+            <img id="preview" alt="Image preview" />
+          </label>
+        </div>
+
+        <button class="circle-btn">More<br>Options</button>
+      </div>
+
+      <textarea
+        id="description"
+        placeholder="Add a description..."
+        rows="4"
+      ></textarea>
+
+      <button class="share-btn" id="shareBtn">Share</button>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
