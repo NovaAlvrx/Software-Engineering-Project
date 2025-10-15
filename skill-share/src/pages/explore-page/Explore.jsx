@@ -18,16 +18,20 @@ const posts = [
 
 function Explore() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState([]);
-
+  const [activeSearch, setActiveSearch] = useState(""); 
+  
+  //for button
   const handleSearch = () => {
-    const filtered = posts.filter((p) =>
-      p.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setResults(filtered);
+    setActiveSearch(searchTerm);
   };
 
-  const displayPosts = results.length > 0 || searchTerm ? results : posts;
+  // changed to real-time filtering
+  const displayPosts = posts.filter((p) =>
+    p.title.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
+
+  
 
   return (
     <main className="explore-main">
@@ -42,8 +46,8 @@ function Explore() {
         <button onClick={handleSearch}>Search</button>
       </div>
 
-      {searchTerm && results.length === 0 ? (
-        <p className="no-results">No results found for “{searchTerm}”.</p>
+      {activeSearch && displayPosts.length === 0 ? (
+        <p className="no-results">No results found for “{activeSearch}”.</p>
       ) : (
         <div className="posts-grid">
           {displayPosts.map((post) => (
