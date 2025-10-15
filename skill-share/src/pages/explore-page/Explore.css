@@ -8,7 +8,7 @@
   margin-left: 220px; /* width of navigation bar */
   padding: 2rem;
   min-height: 100vh;
-  width: 100% ;
+  width: 100% ;      /*updated */
   display: flex;
   flex-direction: column;
   align-items: center;

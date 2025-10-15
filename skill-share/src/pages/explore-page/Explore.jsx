@@ -30,9 +30,6 @@ function Explore() {
     p.title.toLowerCase().includes(searchTerm.toLowerCase())
 );
 
-
-  
-
   return (
     <main className="explore-main">
       <div className="search-bar">
