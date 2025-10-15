@@ -1,13 +1,19 @@
-import Explore from "./explore-page/Explore"; // adjust path if needed
-import React from "react"; 
-import "./App.css";
+import reactLogo from './assets/react.svg'
+import './App.css'
 
 function App() {
   return (
-    <div className="App">
-      <Explore />
-    </div>
-  );
+    <>
+      <div>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <p className="read-the-docs">
+        Nothing on our page yet!
+      </p>
+    </>
+  )
 }
 
-export default App;
+export default App
