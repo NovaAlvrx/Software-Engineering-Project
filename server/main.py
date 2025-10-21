@@ -34,6 +34,15 @@ async def get_profile():
 async def get_user_profile(username: str):
     # This would be query database for the user's profile data
     mock_users = {
+        "Suzuna_Kimura_1": {
+            "firstName": "Suzuna",
+            "lastName": "Kimura",
+            "profilePicture": 'https://images6.alphacoders.com/337/thumb-1920-337780.jpg',
+            "postsCount": 24,
+            "followersCount": 156,
+            "followingCount": 89,
+            "wishList": ["Web Development", "Photography", "Cooking", "Guitar", "Programming", "Pilates"]
+        },
         "Maria_Ferdous_1": {
             "firstName": "Maria",
             "lastName": "Ferdous",
