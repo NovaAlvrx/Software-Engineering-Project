@@ -5,7 +5,7 @@ import home from '../assets/icons/home.png'
 import message from '../assets/icons/messages.png'
 import more from '../assets/icons/more.png'
 import './NavBar.css'
-import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 /**
  * Add additional functionality to NavBar such as:
@@ -15,7 +15,25 @@ import { useParams } from 'react-router-dom'
  */
 
 function NavBar() {
-    const { username } = useParams();
+    // Current logged-in user (replace with actual auth context later)
+    const [currentUser, setCurrentUser] = useState(null);
+    
+    // Fetch logged-in user's data
+    useEffect(() => {
+        const fetchCurrentUser = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/profile');
+                if (response.ok) {
+                    const userData = await response.json();
+                    setCurrentUser(userData);
+                }
+            } catch (error) {
+                console.error('Error fetching current user:', error);
+            }
+        };
+        
+        fetchCurrentUser();
+    }, []);
 
     return (
         <nav className="navbar">
@@ -42,7 +60,7 @@ function NavBar() {
                 </a>
                 <a href="/profile" className="nav-item">
                     <img src={profile} alt="Profile" className="nav-item" />
-                    {username ? <span>{username}</span> :<span>Profile</span>}
+                    {currentUser ? <span>{currentUser.firstName} {currentUser.lastName}</span> : <span>Profile</span>}
                 </a>
             </div>
 
