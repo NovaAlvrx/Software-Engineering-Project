@@ -1,0 +1,93 @@
+.signup-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;          
+  width: 100vw;           
+  background-color: #252525;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;  
+  width: 100%;
+  max-width: 420px;
+  height: 50%;              
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3rem 3.25rem;
+  border-radius: 20px;      
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* optional soft shadow for depth */
+}
+
+.logo {
+  font-size: 2.5rem;
+  color: #000;
+  margin-bottom: 0.25rem;
+}
+
+.signup-container h2 {
+  margin-bottom: 1.75rem;
+  color: #333;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.signup-form input {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 0.75rem;
+}
+
+.password-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.password-hint {
+  font-size: 0.8rem;
+  color: #d20000;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.signup-btn {
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  background-color: #000;
+  color: white;
+}
+
+.back-to-login {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+  text-align: center;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #4b6cb7;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.back-btn:hover {
+  color: #000;
+}
