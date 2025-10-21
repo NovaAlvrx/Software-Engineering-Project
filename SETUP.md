@@ -45,7 +45,7 @@ The frontend will run on `http://localhost:5173`
 
 - `GET /api/profile` - Get the default user profile
 - `GET /api/profile/{username}` - Get a specific user's profile
-  - Try: `suzuna_kimura`
+  - Try: `Suzuna_Kimura_1`
 
 ## Example API Response
 
@@ -61,3 +61,13 @@ The frontend will run on `http://localhost:5173`
 }
 ```
 
+## To run test cases
+### For profile_test_case.py
+1. Activate virutal environment:
+```bash
+source venv/bin/activate
+```
+2. Run python profile_test_case.py
+```bash
+python profile_test_case.py
+```
