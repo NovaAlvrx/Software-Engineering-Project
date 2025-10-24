@@ -34,3 +34,5 @@ The server will start at `http://localhost:8000`
 
 The `--reload` flag enables auto-reload when you make code changes during development.
 
+## Setting up the Database
+prisma and prisma/client versions must match (5.17.0) and be compatible with python CLI (0.15)
