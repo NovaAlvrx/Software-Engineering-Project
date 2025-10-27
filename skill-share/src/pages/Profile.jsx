@@ -1,6 +1,6 @@
 import './Profile.css'
 import NavBar from '../components/NavBar'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 function Profile() {
@@ -24,6 +24,36 @@ function Profile() {
         followingCount: 0,
         wishList: ['Web Development', 'Photography', 'Cooking', 'Guitar', 'Spanish', 'Yoga']
     });
+    
+    const [loading, setLoading] = useState(true);
+    
+    // Fetch profile data from backend (mock data for now)
+    useEffect(() => {
+        const fetchProfileData = async () => {
+            try {
+                setLoading(true);
+                // If viewing another user's profile, fetch their data
+                const endpoint = username 
+                    ? `http://localhost:8000/api/profile/${username}`
+                    : 'http://localhost:8000/api/profile';
+                    
+                const response = await fetch(endpoint);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    setProfileData(data);
+                } else {
+                    console.error('Failed to fetch profile data');
+                }
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        
+        fetchProfileData();
+    }, [username]);
     
     // State for edit mode
     const [isEditing, setIsEditing] = useState(false);
@@ -105,6 +135,17 @@ function Profile() {
             wishList: newWishList
         });
     };
+
+    if (loading) {
+        return (
+            <div className="profile-container">
+                <NavBar />
+                <div className="profile">
+                    <p style={{ textAlign: 'center', marginTop: '50px' }}>Loading profile...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="profile-container">
