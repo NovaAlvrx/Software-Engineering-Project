@@ -6,14 +6,14 @@ posts = [
     {"id": 2, "title": "Python with Jane"},
     {"id": 3, "title": "Cooking"},
     {"id": 4, "title": "Guitar Lessons"},
-    {"id": 5, "title": "Harmonica"},
+    {"id": 5, "title": "Hermonica"},
 ]
 
 # search filter
 def search_posts(term):
     return [p for p in posts if term.lower() in p["title"].lower()]
 
-# Test 1: Check if all posts are returned when search is empty
+# Test 1: Check if all posts are shown when search is empty
 def test_all_posts_returned():
     result = search_posts("")
     assert len(result) == len(posts)
