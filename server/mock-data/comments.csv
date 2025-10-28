@@ -1,0 +1,5 @@
+commentId,postId,userId,content,createdAt
+1,1,2,Amazing!,2025-01-01
+2,2,3,That looks so fun!,2025-01-02
+3,3,4,wow!,2025-01-03
+4,4,3,Great job!,2025-01-04

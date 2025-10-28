@@ -1,0 +1,5 @@
+searchHistoryId,userId,searchQuery,searchedAt,numTimesSearched
+1,1,Python,2025-01-01,2
+2,2,Drawing,2025-01-02,3
+3,3,Swimming,2025-01-03,1
+4,4,Sketching,2025-01-04,2

@@ -1,0 +1,5 @@
+reviewId,exchangeId,reviewerId,revieweeId,rating,description,createdAt
+1,1,1,2,4,Good experience,2025-01-01
+2,2,2,3,5,Excellent,2025-01-02
+3,3,3,4,3,Average,2025-01-03
+4,4,4,5,4,Helpful,2025-01-04
