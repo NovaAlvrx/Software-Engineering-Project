@@ -1,161 +1,204 @@
+/* General Reset and Base Styles */
 * {
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
     margin: 0;
     padding: 0;
-  }
-  
-  body {
-    background-color: #fafafa;
+    font-family: Arial, sans-serif; /* Example font */
+}
+
+body {
+    background-color: #f4f4f9; /* Light background for the whole page */
     color: #333;
+}
+
+.container {
     display: flex;
-    height: 100vh;
-  }
-  
-  .container {
-    display: flex;
-    width: 100%;
-  }
-  
-  /* Sidebar */
-  .sidebar {
-    background-color: #fff;
+    min-height: 100vh;
+}
+
+/* -------------------- Sidebar Styles -------------------- */
+.sidebar {
+    width: 200px; /* Fixed width for the sidebar */
+    background-color: #ffffff; /* White background */
     border-right: 1px solid #ddd;
-    width: 230px;
-    padding: 1rem;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .logo {
-    font-size: 1.6rem;
-    margin-bottom: 2rem;
-    text-align: left;
-    line-height: 1.2;
-  }
-  
-  .sidebar ul {
-    list-style: none;
-  }
-  
-  .sidebar li {
-    padding: 10px 0;
-    cursor: pointer;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.2s;
-  }
-  
-  .sidebar li.active,
-  .sidebar li:hover {
-    color: #007bff;
-  }
-  
-  .more {
-    border-top: 1px solid #ddd;
-    padding-top: 1rem;
-    cursor: pointer;
-  }
-  
-  /* Main Content */
-  .main-content {
-    flex: 1;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .title {
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
+    gap: 30px; /* Space between main sections */
+}
+
+.logo {
+    font-size: 1.5em;
     font-weight: bold;
-  }
-  
-  .post-container {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.main-nav li a,
+.user-profile a,
+.more-options a {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 3rem;
-    margin-bottom: 1rem;
-  }
-  
-  .circle-btn {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background-color: #eee;
-    border: none;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: 0.2s;
-  }
-  
-  .circle-btn:hover {
-    background-color: #e2e2e2;
-  }
-  
-  .image-section {
-    background-color: #e5f3e0;
-    border: 2px dashed #aaa;
-    width: 300px;
-    height: 160px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .image-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
+    padding: 10px 0;
+    text-decoration: none;
     color: #555;
-    font-size: 1rem;
-    cursor: pointer;
+    transition: color 0.2s;
+    font-size: 1em;
+}
+
+.main-nav li a:hover,
+.user-profile a:hover,
+.more-options a:hover {
+    color: #007bff; /* SkillSwap primary color example */
+}
+
+.main-nav i,
+.user-profile i,
+.more-options i {
+    margin-right: 10px;
+    width: 20px; /* Fixed width for alignment */
     text-align: center;
-    position: relative;
-  }
-  
-  .image-placeholder img {
-    display: none;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 4px;
-  }
-  
-  textarea {
-    width: 80%;
-    margin-top: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 1rem;
-    resize: none;
-  }
-  
-  .share-btn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 14px 50px;
-    margin-top: 1.5rem;
-    font-size: 1.1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: 0.2s;
-  }
-  
-  .share-btn:hover {
-    background-color: #005fcc;
-  }
-  
+}
+
+/* Ensure the layout respects the wireframe's flow */
+.user-profile {
+    margin-top: auto; /* Pushes [username] down towards the bottom */
+}
+
+.more-options {
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* -------------------- Main Content Styles -------------------- */
+.content {
+    flex-grow: 1; /* Takes up the remaining space */
+    padding: 40px;
+}
+
+.page-title {
+    font-size: 2em;
+    margin-bottom: 40px;
+    text-align: center;
+    color: #333;
+}
+
+.reviews-grid {
+    display: grid;
+    /* Create three columns for the review cards */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto; /* Center the grid */
+}
+
+/* -------------------- Review Card Styles -------------------- */
+.review-card {
+    background-color: #e0e0e0; /* Grey background matching the wireframe */
+    border: 1px solid #333;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative; /* For positioning the PFP */
+    min-height: 250px; /* Placeholder minimum height */
+    padding-top: 40px; /* Add space for the PFP at the top */
+}
+
+.pfp-container {
+    position: absolute;
+    top: -20px; /* Half the height of the pfp to center it on the top border */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pfp {
+    width: 60px;
+    height: 60px;
+    background-color: #5d8aa8; /* Blue color matching the wireframe */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border: 2px solid white; /* White border for contrast */
+}
+
+.review-content {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.reviewer-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+.session-name {
+    font-style: italic;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+}
+
+.description {
+    margin-bottom: 20px;
+    min-height: 70px; /* Give description a minimum space */
+    color: #555;
+}
+
+.rating {
+    font-size: 1.5em; /* Size of the stars */
+    color: #ccc; /* Default color of empty stars */
+}
+
+.rating .filled {
+    color: #ffc107; /* Yellow/Gold for filled stars */
+}
+
+/* Media Query for smaller screens (e.g., tablets) */
+@media (max-width: 1000px) {
+    .reviews-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    }
+}
+
+/* Media Query for very small screens (e.g., phones) */
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column; /* Stack sidebar and content */
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 10px 20px;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        flex-direction: row; /* Horizontal layout for mobile sidebar */
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo {
+        margin-bottom: 0;
+    }
+
+    .main-nav, .user-profile, .more-options {
+        display: none; /* Hide detailed navigation on small screens */
+    }
+
+    /* Could implement a burger menu, but hiding for simplicity */
+
+    .content {
+        padding: 20px;
+    }
+
+    .reviews-grid {
+        grid-template-columns: 1fr; /* Single column */
+    }
+}

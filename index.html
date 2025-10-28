@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap - Session Reviews</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h1 class="logo">Skill Swap</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-search"></i> Search</a></li>
+                    <li><a href="#"><i class="fas fa-plus-circle"></i> Create</a></li>
+                    <li><a href="#"><i class="fas fa-comments"></i> Messages</a></li>
+                </ul>
+            </nav>
+            <div class="user-profile">
+                <a href="#"><i class="fas fa-user-circle"></i> [Username]</a>
+            </div>
+            <div class="more-options">
+                <a href="#"><i class="fas fa-ellipsis-h"></i> More</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <h2 class="page-title">Session Reviews</h2>
+
+            <div class="reviews-grid" id="reviews-container">
+                <div class="review-card">
+                    <div class="pfp-container">
+                        <div class="pfp">PFP</div>
+                    </div>
+                    <div class="review-content">
+                        <p class="reviewer-name">&lt;Name&gt;</p>
+                        <p class="session-name">&lt;Session Name&gt;</p>
+                        <p class="description">&lt;Description&gt;</p>
+                        <div class="rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="pfp-container">
+                        <div class="pfp">PFP</div>
+                    </div>
+                    <div class="review-content">
+                        <p class="reviewer-name">Jane Doe</p>
+                        <p class="session-name">Advanced React Hooks</p>
+                        <p class="description">Learned a lot about custom hooks! Highly recommend this session.</p>
+                        <div class="rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="pfp-container">
+                        <div class="pfp">PFP</div>
+                    </div>
+                    <div class="review-content">
+                        <p class="reviewer-name">John Smith</p>
+                        <p class="session-name">Introduction to Python</p>
+                        <p class="description">Great beginner-friendly session. The instructor was very patient.</p>
+                        <div class="rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
