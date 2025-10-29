@@ -1,3 +1,4 @@
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -86,3 +87,4 @@ async def get_user_profile(username: str):
             "followingCount": 0,
             "wishList": []
         }
+
