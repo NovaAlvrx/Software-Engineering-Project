@@ -42,6 +42,35 @@ async def get_profile():
                 ],
                 "tools": ["Canon EOS R6", "Adobe Lightroom Classic", "Capture One Pro"]
             }
+        ],
+        "reviews": [
+            {
+                "id": 1,
+                "reviewerName": "Jasmine R.",
+                "reviewerInitials": "JR",
+                "sessionType": "Portrait Masterclass",
+                "rating": 5,
+                "comment": "Suzuna breaks down complex photography concepts into approachable steps. I finally understand how to work with natural light thanks to her patient guidance.",
+                "date": "October 2024"
+            },
+            {
+                "id": 2,
+                "reviewerName": "Marco L.",
+                "reviewerInitials": "ML",
+                "sessionType": "Creative Direction Coaching",
+                "rating": 5,
+                "comment": "The one-on-one coaching challenged me to think more critically about storytelling in my shoots. The personalized feedback was exactly what I needed to level up.",
+                "date": "August 2024"
+            },
+            {
+                "id": 3,
+                "reviewerName": "Priya S.",
+                "reviewerInitials": "PS",
+                "sessionType": "Editing Workshop",
+                "rating": 4,
+                "comment": "Loved the real-time editing walkthroughs! I left with a Lightroom workflow I use every day. Hoping for a follow-up session focused on color grading.",
+                "date": "June 2024"
+            }
         ]
     }
 
@@ -72,6 +101,35 @@ async def get_user_profile(username: str):
                     ],
                     "tools": ["Canon EOS R6", "Adobe Lightroom Classic", "Capture One Pro"]
                 }
+            ],
+            "reviews": [
+                {
+                    "id": 1,
+                    "reviewerName": "Jasmine R.",
+                    "reviewerInitials": "JR",
+                    "sessionType": "Portrait Masterclass",
+                    "rating": 5,
+                    "comment": "Suzuna breaks down complex photography concepts into approachable steps. I finally understand how to work with natural light thanks to her patient guidance.",
+                    "date": "October 2024"
+                },
+                {
+                    "id": 2,
+                    "reviewerName": "Marco L.",
+                    "reviewerInitials": "ML",
+                    "sessionType": "Creative Direction Coaching",
+                    "rating": 5,
+                    "comment": "The one-on-one coaching challenged me to think more critically about storytelling in my shoots. The personalized feedback was exactly what I needed to level up.",
+                    "date": "August 2024"
+                },
+                {
+                    "id": 3,
+                    "reviewerName": "Priya S.",
+                    "reviewerInitials": "PS",
+                    "sessionType": "Editing Workshop",
+                    "rating": 4,
+                    "comment": "Loved the real-time editing walkthroughs! I left with a Lightroom workflow I use every day. Hoping for a follow-up session focused on color grading.",
+                    "date": "June 2024"
+                }
             ]
         },
         "Maria_Ferdous_1": {
@@ -82,7 +140,8 @@ async def get_user_profile(username: str):
             "followersCount": 530,
             "followingCount": 29,
             "wishList": ["Web Development", "Chemistry", "Photography", "Cooking"],
-            "skills": []
+            "skills": [],
+            "reviews": []
         },
         "Noah_Alvarez_1": {
             "firstName": "Noah",
@@ -92,7 +151,8 @@ async def get_user_profile(username: str):
             "followersCount": 320,
             "followingCount": 124,
             "wishList": ["Python", "Machine Learning", "Cooking"],
-            "skills": []
+            "skills": [],
+            "reviews": []
         },
         "Gerardo_Rivera_1": {
             "firstName": "Gerardo",
@@ -102,7 +162,8 @@ async def get_user_profile(username: str):
             "followersCount": 402,
             "followingCount": 43,
             "wishList": ["Gaming", "Game Development"],
-            "skills": []
+            "skills": [],
+            "reviews": []
         }
     }
     
@@ -119,5 +180,6 @@ async def get_user_profile(username: str):
             "followersCount": 0,
             "followingCount": 0,
             "wishList": [],
-            "skills": []
+            "skills": [],
+            "reviews": []
         }
