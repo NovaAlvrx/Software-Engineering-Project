@@ -27,7 +27,22 @@ async def get_profile():
         "postsCount": 24,
         "followersCount": 156,
         "followingCount": 89,
-        "wishList": ["Web Development", "Photography", "Cooking", "Guitar", "Programming", "Pilates"]
+        "wishList": ["Web Development", "Photography", "Cooking", "Guitar", "Programming", "Pilates"],
+        "skills": [
+            {
+                "name": "Photography",
+                "level": "Professional",
+                "yearsExperience": 6,
+                "description": "Lifestyle and portrait photographer focused on capturing candid, story-driven moments that highlight authentic emotion.",
+                "focusAreas": ["Portrait Sessions", "Travel & Lifestyle", "Community Events"],
+                "offerings": [
+                    "One-on-one coaching for aspiring photographers",
+                    "Creative direction for brand shoots",
+                    "Hands-on editing workshops"
+                ],
+                "tools": ["Canon EOS R6", "Adobe Lightroom Classic", "Capture One Pro"]
+            }
+        ]
     }
 
 # Endpoint to get a specific user's profile
@@ -42,7 +57,22 @@ async def get_user_profile(username: str):
             "postsCount": 24,
             "followersCount": 156,
             "followingCount": 89,
-            "wishList": ["Web Development", "Photography", "Cooking", "Guitar", "Programming", "Pilates"]
+            "wishList": ["Web Development", "Photography", "Cooking", "Guitar", "Programming", "Pilates"],
+            "skills": [
+                {
+                    "name": "Photography",
+                    "level": "Professional",
+                    "yearsExperience": 6,
+                    "description": "Lifestyle and portrait photographer focused on capturing candid, story-driven moments that highlight authentic emotion.",
+                    "focusAreas": ["Portrait Sessions", "Travel & Lifestyle", "Community Events"],
+                    "offerings": [
+                        "One-on-one coaching for aspiring photographers",
+                        "Creative direction for brand shoots",
+                        "Hands-on editing workshops"
+                    ],
+                    "tools": ["Canon EOS R6", "Adobe Lightroom Classic", "Capture One Pro"]
+                }
+            ]
         },
         "Maria_Ferdous_1": {
             "firstName": "Maria",
@@ -51,7 +81,8 @@ async def get_user_profile(username: str):
             "postsCount": 32,
             "followersCount": 530,
             "followingCount": 29,
-            "wishList": ["Web Development", "Chemistry", "Photography", "Cooking"]
+            "wishList": ["Web Development", "Chemistry", "Photography", "Cooking"],
+            "skills": []
         },
         "Noah_Alvarez_1": {
             "firstName": "Noah",
@@ -60,7 +91,8 @@ async def get_user_profile(username: str):
             "postsCount": 45,
             "followersCount": 320,
             "followingCount": 124,
-            "wishList": ["Python", "Machine Learning", "Cooking"]
+            "wishList": ["Python", "Machine Learning", "Cooking"],
+            "skills": []
         },
         "Gerardo_Rivera_1": {
             "firstName": "Gerardo",
@@ -69,7 +101,8 @@ async def get_user_profile(username: str):
             "postsCount": 21,
             "followersCount": 402,
             "followingCount": 43,
-            "wishList": ["Gaming", "Game Development"]
+            "wishList": ["Gaming", "Game Development"],
+            "skills": []
         }
     }
     
@@ -85,6 +118,6 @@ async def get_user_profile(username: str):
             "postsCount": 0,
             "followersCount": 0,
             "followingCount": 0,
-            "wishList": []
+            "wishList": [],
+            "skills": []
         }
-
