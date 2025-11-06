@@ -1,5 +1,5 @@
 import './Profile.css'
-import NavBar from '../components/NavBar'
+import NavBar from '../../components/navbar/NavBar'
 import { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -148,9 +148,7 @@ function Profile() {
     }
 
     return (
-        <div className="profile-container">
-            <NavBar />
-       
+        <div className="profile-container">       
             <div className="profile">
                 {isEditing && (
                     <div className="edit-modal-overlay" onClick={handleCancelEdit}>
@@ -312,7 +310,7 @@ function Profile() {
                 
                 <div className="profile-content">
                     {activeTab === 'posts' && (
-                        <div className="posts-grid">
+                        <div className="profile-posts-grid">
                             {posts.map(post => (
                                 <div key={post.id} className="post-item">
                                     <img src={post.image} alt={`Post ${post.id}`} />

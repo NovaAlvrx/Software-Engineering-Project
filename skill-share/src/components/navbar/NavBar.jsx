@@ -1,11 +1,12 @@
-import create from '../assets/icons/create.png'
-import profile from '../assets/icons/profile.png'
-import search from '../assets/icons/search.png'
-import home from '../assets/icons/home.png'
-import message from '../assets/icons/messages.png'
-import more from '../assets/icons/more.png'
+import create from '../../assets/icons/create.png'
+import profile from '../../assets/icons/profile.png'
+import search from '../../assets/icons/search.png'
+import home from '../../assets/icons/home.png'
+import message from '../../assets/icons/messages.png'
+import more from '../../assets/icons/more.png'
 import './NavBar.css'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 /**
  * Add additional functionality to NavBar such as:
@@ -38,30 +39,30 @@ function NavBar() {
     return (
         <nav className="navbar">
             <div className="nav-logo flex-column-center">
-                Skill <br/> Share
+                Skill <br/> Swap
             </div>
 
             <div className="nav-links">
-                <a href="/" className="nav-item">
+                <Link to="/" className="nav-item">
                     <img src={home} alt="Home" />
                     <span>Home</span>
-                </a>
-                <a href="/search" className="nav-item">
+                </Link>
+                <Link to="/explore" className="nav-item">
                     <img src={search} alt="Search" />
-                    <span>Search</span>
-                </a>
-                <a href="/create" className="nav-item">
+                    <span>Explore</span>
+                </Link>
+                <Link to="/create" className="nav-item">
                     <img src={create} alt="Create" />
                     <span>Create</span>
-                </a>
-                <a href="/messages" className="nav-item">
+                </Link>
+                <Link to="/messages" className="nav-item">
                     <img src={message} alt="Messages" />
                     <span>Messages</span>
-                </a>
-                <a href="/profile" className="nav-item">
+                </Link>
+                <Link to="/profile" className="nav-item">
                     <img src={profile} alt="Profile" className="nav-item" />
                     {currentUser ? <span>{currentUser.firstName} {currentUser.lastName}</span> : <span>Profile</span>}
-                </a>
+                </Link>
             </div>
 
             <div className="nav-links">
