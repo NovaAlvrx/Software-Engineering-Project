@@ -2,7 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import Profile from './pages/Profile.jsx'
+import Layout from './routes/Layout.jsx'
+import Profile from './pages/profile-page/Profile.jsx'
+import Explore from './pages/explore-page/Explore.jsx'
 import {
   BrowserRouter,
   Routes,
@@ -13,9 +15,12 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<App />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/explore" element={<Explore />} />
+        </Route>
       </Routes>
     </BrowserRouter>    
   </StrictMode>,
