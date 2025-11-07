@@ -5,6 +5,7 @@ import App from './App.jsx'
 import Layout from './routes/Layout.jsx'
 import Profile from './pages/profile-page/Profile.jsx'
 import Explore from './pages/explore-page/Explore.jsx'
+import MockSignUp from './pages/mock-sign-up/MockSignUp.jsx'
 import {
   BrowserRouter,
   Routes,
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/profile/:username" element={<Profile />} />
           <Route path="/explore" element={<Explore />} />
         </Route>
+        <Route path="/sign-up" element={<MockSignUp />} />
       </Routes>
     </BrowserRouter>    
   </StrictMode>,
