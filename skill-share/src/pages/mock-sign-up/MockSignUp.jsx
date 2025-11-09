@@ -27,7 +27,7 @@ function MockSignUp() {
         formData.append('password', password);
 
         try {
-            const response = await axios.post('http://localhost:8000/auth/sign-up', formData)
+            const response = await axios.post('http://localhost:8000/auth/sign-up', formData, { withCredentials: true })
             .then(() => navigate('/'));
             console.log('Sign-up successful:', response.data);
 
