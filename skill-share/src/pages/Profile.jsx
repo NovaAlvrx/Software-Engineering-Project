@@ -1,11 +1,12 @@
 import './Profile.css'
 import NavBar from '../components/NavBar'
 import { useState, useRef, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function Profile() {
     const { username } = useParams();
     const fileInputRef = useRef(null);
+    const navigate = useNavigate();
     
     // Current user (fix when auth context in production)
     const [currentUser] = useState('currentUsername'); // Replace with actual auth
@@ -22,7 +23,7 @@ function Profile() {
         postsCount: 0,
         followersCount: 0,
         followingCount: 0,
-        wishList: ['Web Development', 'Photography', 'Cooking', 'Guitar', 'Spanish', 'Yoga']
+        wishList: ['Web Development', 'Moving Photography', 'Cooking', 'Guitar', 'Spanish', 'Yoga']
     });
     
     const [loading, setLoading] = useState(true);
@@ -64,13 +65,55 @@ function Profile() {
     
     // Dummy posts data
     const [posts] = useState([
-        { id: 1, image: 'https://via.placeholder.com/300' },
-        { id: 2, image: 'https://via.placeholder.com/300' },
-        { id: 3, image: 'https://via.placeholder.com/300' },
-        { id: 4, image: 'https://via.placeholder.com/300' },
-        { id: 5, image: 'https://via.placeholder.com/300' },
-        { id: 6, image: 'https://via.placeholder.com/300' },
+        { 
+            id: 1, 
+            image: 'https://images.unsplash.com/photo-1761405378543-e74453424152?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1964',
+            title: 'Post 1',
+            description: 'A photo I took while shopping',
+            tags: ['Fashion', 'Photography', 'Portraits']
+        },
+        { 
+            id: 2, 
+            image: 'https://images.unsplash.com/photo-1761405378558-3688471ba000?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1964',
+            title: 'Post 2',
+            description: 'Photo from my time travelling up north.',
+            tags: ['Fashion', 'Photography', 'Portraits']
+        },
+        { 
+            id: 3, 
+            image: 'https://images.unsplash.com/photo-1761405378333-9eb3a4658a13?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1965',
+            title: 'Post 3',
+            description: 'Photo I took while walking on the streets of New York.',
+            tags: ['Fashion', 'Photography', 'Street']
+        },
+        { 
+            id: 4, 
+            image: 'https://images.unsplash.com/photo-1761562964790-77f9f5ac45b9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1587',
+            title: 'Post 4',
+            description: 'Photo I took while travelling',
+            tags: ['Fashion', 'Photography', 'Portraits']
+        },
+        { 
+            id: 5, 
+            image: 'https://images.unsplash.com/photo-1761216674297-6ffa4d89400c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1587',
+            title: 'Post 5',
+            description: 'Photo I took in the mountains.',
+            tags: ['Fashion', 'Photography', 'Portraits']
+        },
+        { 
+            id: 6, 
+            image: 'https://images.unsplash.com/photo-1761522001036-dc4a66722464?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=4287',
+            title: 'Post 6',
+            description: 'Portrait I took during my trip to Europe.',
+            tags: ['Fashion', 'Photography', 'Portraits']
+        },
     ]);
+
+    const handlePostClick = (post) => {
+        const basePath = username ? `/profile/${username}` : '/profile';
+        const destination = `${basePath}/post/${post.id}`;
+        navigate(destination, { state: { post } });
+    };
     
     const handleOpenEdit = () => {
         setEditForm({...profileData});
@@ -314,8 +357,20 @@ function Profile() {
                     {activeTab === 'posts' && (
                         <div className="posts-grid">
                             {posts.map(post => (
-                                <div key={post.id} className="post-item">
-                                    <img src={post.image} alt={`Post ${post.id}`} />
+                                <div 
+                                    key={post.id} 
+                                    className="post-item"
+                                    onClick={() => handlePostClick(post)}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={(event) => {
+                                        if (event.key === 'Enter' || event.key === ' ') {
+                                            event.preventDefault();
+                                            handlePostClick(post);
+                                        }
+                                    }}
+                                >
+                                    <img src={post.image} alt={post.title || `Post ${post.id}`} />
                                 </div>
                             ))}
                         </div>

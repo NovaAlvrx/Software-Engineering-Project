@@ -3,9 +3,9 @@
     flex-direction: row;
     position: relative;
     background-color: #fafafa;
-    left: 20%;
-    width: 75%;
-    max-width: 75%;
+    margin-left: 264px;
+    width: calc(100% - 264px);
+    min-height: 100vh;
 }
 
 .profile {
@@ -344,9 +344,8 @@
 
 .posts-grid {
     display: grid;
-    place-items: center;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 .post-item {
@@ -356,17 +355,25 @@
     cursor: pointer;
     position: relative;
     border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
 }
 
 .post-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.2s;
+    transition: transform 0.3s ease;
 }
 
-.post-item:hover img {
+.post-item:hover img,
+.post-item:focus img {
     transform: scale(1.05);
+}
+
+.post-item:focus {
+    outline: 2px solid #0095f6;
+    outline-offset: 4px;
 }
 
 .skills-content,
@@ -379,6 +386,12 @@
 @media (max-width: 768px) {
     .profile {
         padding: 20px;
+    }
+    
+    .profile-container {
+        margin-left: 0;
+        width: 100%;
+        flex-direction: column;
     }
     
     .profile-header {
