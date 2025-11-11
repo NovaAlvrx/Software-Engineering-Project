@@ -7,6 +7,7 @@ import more from '../../assets/icons/more.png'
 import './NavBar.css'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 /**
  * Add additional functionality to NavBar such as:
@@ -18,23 +19,33 @@ import { Link } from 'react-router-dom'
 function NavBar() {
     // Current logged-in user (replace with actual auth context later)
     const [currentUser, setCurrentUser] = useState(null);
+    const [userId, setUserId] = useState(null)
     
     // Fetch logged-in user's data
     useEffect(() => {
         const fetchCurrentUser = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/profile');
-                if (response.ok) {
-                    const userData = await response.json();
-                    setCurrentUser(userData);
-                }
+                const token = localStorage.getItem('access_token');
+                if (!token) return;
+
+                const response = await axios.get('http://localhost:8000/auth/me', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    withCredentials: true
+                });
+
+                const userData = response.data
+                setCurrentUser(userData.fName + ' ' + userData.lName);
+                setUserId(userData.id);
+                console.log('user id: ', userId)
             } catch (error) {
                 console.error('Error fetching current user:', error);
             }
         };
         
         fetchCurrentUser();
-    }, []);
+    }, [userId]);
 
     return (
         <nav className="navbar">
@@ -59,9 +70,10 @@ function NavBar() {
                     <img src={message} alt="Messages" />
                     <span>Messages</span>
                 </Link>
-                <Link to="/profile" className="nav-item">
+
+                <Link to={currentUser ? `/profile/${userId}` : "/login"} className="nav-item">
                     <img src={profile} alt="Profile" className="nav-item" />
-                    {currentUser ? <span>{currentUser.firstName} {currentUser.lastName}</span> : <span>Profile</span>}
+                    <span>{currentUser || "Login"}</span>
                 </Link>
             </div>
 
