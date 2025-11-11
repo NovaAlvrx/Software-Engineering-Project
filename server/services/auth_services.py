@@ -100,4 +100,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     if not user:
         raise credentials_exception
     
+    print('user id: ', user.userId)
+    
     return {"id": user.userId, "fName": user.fName, "lName": user.lName}
