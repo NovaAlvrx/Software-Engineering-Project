@@ -371,8 +371,9 @@
     transform: scale(1.05);
 }
 
-.skills-content,
-.reviews-content {
+.no-posts-content,
+.no-skills-content,
+.no-reviews-content {
     padding: 40px;
     text-align: center;
     color: #8e8e8e;
