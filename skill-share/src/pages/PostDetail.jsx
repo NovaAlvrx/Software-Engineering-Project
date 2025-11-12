@@ -1,22 +1,56 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import NavBar from '../components/NavBar'
 import './PostDetail.css'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 function PostDetail() {
     const navigate = useNavigate()
-    const { username, postId } = useParams()
-    const location = useLocation()
-    const post = location.state?.post
+    const { id, post_id } = useParams()
+    // const location = useLocation()
+    // const post = location.state?.post
+
+    console.log('PostDetail user id: ', id)
+    console.log('PostDetail post id: ', post_id)
+
+    const [post, setPost] = useState({
+        'image': null,
+        'description': null
+    })
+
+    const postForm = new FormData();
+    postForm.append('userId', id)
+    postForm.append('postId', post_id)
+
+    useEffect(() => {
+        const fetchPostData = async () => {
+            try {
+                const response = await axios(`http://localhost:8000/users/post`, {
+                    params: { userId: id, postId: post_id },
+                    withCredentials: true,
+                });
+
+                const data = response.data
+
+                setPost({
+                    'image': data.post_data.img,
+                    'description': data.post_data.description
+                })
+            } catch (error) {
+                console.error('Error fetching post', error)
+            }
+        };
+
+        fetchPostData();
+    }, [])
 
     const handleBack = () => {
-        const basePath = username ? `/profile/${username}` : '/profile'
+        const basePath = id ? `/profile/${id}` : '/'
         navigate(basePath)
     }
 
     if (!post) {
         return (
             <div className="post-detail-container">
-                <NavBar />
                 <main className="post-detail">
                     <button className="back-button" onClick={handleBack}>
                         ← Back to profile
@@ -35,8 +69,7 @@ function PostDetail() {
 
     return (
         <div className="post-detail-container">
-            <NavBar />
-            <main className="post-detail">
+            <div className="post-detail">
                 <button className="back-button" onClick={handleBack}>
                     ← Back to profile
                 </button>
@@ -45,20 +78,10 @@ function PostDetail() {
                         <img src={post.image} alt={post.title || `Post ${post.id}`} />
                     </div>
                     <div className="post-detail-meta">
-                        <h1>{post.title || `Post ${post.id}`}</h1>
                         {post.description && <p className="post-detail-description">{post.description}</p>}
-                        {post.tags?.length ? (
-                            <div className="post-detail-tags">
-                                {post.tags.map((tag, index) => (
-                                    <span className="post-tag" key={`${tag}-${index}`}>
-                                        #{tag}
-                                    </span>
-                                ))}
-                            </div>
-                        ) : null}
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
     )
 }
