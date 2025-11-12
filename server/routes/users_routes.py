@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Form
 from prisma import Prisma
 from core.database import db
-from typing import Optional
+from typing import Optional, Annotated
 import json
 
 router = APIRouter(prefix='/users', tags=["users"])
@@ -30,7 +30,9 @@ async def get_profile_data(id: int):
         wish_list = [skill.skillName for skill in user_data.targetSkills]
         print(wish_list)
 
-        return {'user_name': user_name, 'user_data': user_data, 'wish_list': wish_list}
+        posts = [{'post_id': post.postId, 'post_img': post.img} for post in user_data.posts]
+
+        return {'user_name': user_name, 'user_data': user_data, 'wish_list': wish_list, 'posts': posts}
 
     except Exception as e:
         print('Error getting user profile data: ', e) 
@@ -80,3 +82,12 @@ async def update_profile_data(id: int,
     except Exception as e:
         print('Error occured updating profile data: ', e)
         return None
+    
+@router.get('/post')
+async def get_post(userId: int, postId: int):
+    print('Getting post')
+    try:
+        post_data = await db.post.find_unique(where={"userId": userId, "postId": postId})
+        return {"post_data": post_data}
+    except Exception as e:
+        print('Error fetching post', e)

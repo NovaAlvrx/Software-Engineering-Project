@@ -1,13 +1,15 @@
 import './Profile.css'
 import NavBar from '../../components/navbar/NavBar'
 import { useState, useRef, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 function Profile() {
     const { id } = useParams();
     const fileInputRef = useRef(null);
     const isOwnProfile = useState(true); // TODO: check if param id == auth id
+
+    const navigate = useNavigate();
             
     // Profile data
     const [profileData, setProfileData] = useState({
@@ -37,9 +39,11 @@ function Profile() {
                     firstName: data.user_name.fName,
                     lastName: data.user_name.lName,
                     profilePicture: data.user_data.profile_picture,
-                    posts: data.user_data.posts,
+                    posts: data.posts,
                     wishList: data.wish_list ?? []
                 });
+
+                console.log('Reading post data: ', data.posts)
 
             } catch (error) {
                 console.error('Error fetching profile:', error);
@@ -176,6 +180,11 @@ function Profile() {
                 </div>
             </div>
         );
+    }
+
+    const handleOpenPost = (post_id) => {
+        const post_path = `/profile/${id}/post/${post_id}`;
+        navigate(post_path);
     }
 
     return (
@@ -349,8 +358,8 @@ function Profile() {
                             :
                                 <div className="profile-posts-grid">
                                     {profileData.posts.map(post => (
-                                        <div key={post.id} className="post-item">
-                                            <img src={post.image} alt={`Post ${post.id}`} />
+                                        <div key={post.post_id} className="post-item" onClick={() => handleOpenPost(post.post_id)}>
+                                            <img src={post.post_img} alt={`Post ${post.post_id}`} />
                                         </div>
                                     ))}
                                 </div>
