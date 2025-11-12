@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import App from './App.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/SignUp.jsx'
 import Layout from './routes/Layout.jsx'
@@ -20,15 +21,15 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+          <Route index element={<App />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/profile/:id/post/:post_id" element={<PostDetail />} />
           <Route path="/explore" element={<Explore />} />
         </Route>
-        <Route path="/sign-up" element={<MockSignUp />} />
-        <Route path="/login" element={<MockLogin />} />
-        <Route path="/profile/post/:postId" element={<PostDetail />} />
-        <Route path="/profile/:username/post/:postId" element={<PostDetail />} />
+        <Route path="/mock-sign-up" element={<MockSignUp />} />
+        <Route path="/mock-login" element={<MockLogin />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </BrowserRouter>    
   </StrictMode>,
