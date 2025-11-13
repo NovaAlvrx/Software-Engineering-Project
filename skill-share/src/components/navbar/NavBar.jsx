@@ -6,7 +6,7 @@ import message from '../../assets/icons/messages.png'
 import more from '../../assets/icons/more.png'
 import './NavBar.css'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 /**
@@ -20,6 +20,9 @@ function NavBar() {
     // Current logged-in user (replace with actual auth context later)
     const [currentUser, setCurrentUser] = useState(null);
     const [userId, setUserId] = useState(null)
+    const [showMore, setShowMore] = useState(false);
+
+    const navigate = useNavigate()
     
     // Fetch logged-in user's data
     useEffect(() => {
@@ -46,6 +49,11 @@ function NavBar() {
         
         fetchCurrentUser();
     }, [userId]);
+
+    const onClickLogout = () => {
+        localStorage.removeItem('access_token');
+        navigate('/login');
+    }
 
     return (
         <nav className="navbar">
@@ -77,12 +85,23 @@ function NavBar() {
                 </Link>
             </div>
 
-            <div className="nav-links">
-                <a href="/more" className="nav-item">
-                    <img src={more} alt="More" />
-                    <span>More</span>
-                </a>
-            </div>
+            <div className="nav-links more-links" onClick={() => setShowMore(prev => !prev)}>
+                    <div className="nav-item">
+                        <img src={more} alt="More" />
+                        <span>More</span>
+                    </div>
+                    {
+                        showMore ? (
+                            <div className="more-items">
+                                <button className="more-item" onClick={onClickLogout}>Log out</button>
+                                <button className="more-item">About</button>
+                                <button className="more-item">Contact</button>
+                            </div>
+                        ) : (
+                            <></>
+                        )
+                    }
+                </div>
         </nav>
     )
 }

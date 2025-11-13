@@ -56,3 +56,39 @@
     border-radius: 50%;
     border: 1px solid #dbdbdb;
 }
+
+.more-links {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.more-items {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: start;
+    width: 50%;
+    z-index: 5;
+    bottom: 4rem;
+
+    color: black;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.more-item {
+    margin: 0.8rem 1.1rem;
+    text-align: left;
+
+    color: black;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.more-item:hover {
+    text-decoration: underline;
+}
