@@ -1,32 +1,27 @@
 import './Profile.css'
-import NavBar from '../components/NavBar'
+import NavBar from '../../components/navbar/NavBar'
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function Profile() {
-    const { username } = useParams();
+    const { id } = useParams();
     const fileInputRef = useRef(null);
+    const isOwnProfile = useState(true); // TODO: check if param id == auth id
+
     const navigate = useNavigate();
-    
-    // Current user (fix when auth context in production)
-    const [currentUser] = useState('currentUsername'); // Replace with actual auth
-    
-    // Determine if this is the user's own profile
-    const isOwnProfile = !username || username === currentUser;
-    
+            
     // Profile data
     const [profileData, setProfileData] = useState({
         firstName: 'First Name',
         lastName: 'Last Name',
-        bio: '',
         profilePicture: null,
-        postsCount: 0,
-        followersCount: 0,
-        followingCount: 0,
-        wishList: ['Web Development', 'Moving Photography', 'Cooking', 'Guitar', 'Spanish', 'Yoga']
+        posts: 0,
+        wishList: []
     });
     
     const [loading, setLoading] = useState(true);
+    const [refresh, setRefresh] = useState(false);
     
     // Fetch profile data from backend (mock data for now)
     useEffect(() => {
@@ -34,86 +29,38 @@ function Profile() {
             try {
                 setLoading(true);
                 // If viewing another user's profile, fetch their data
-                const endpoint = username 
-                    ? `http://localhost:8000/api/profile/${username}`
-                    : 'http://localhost:8000/api/profile';
-                    
-                const response = await fetch(endpoint);
+                const response = await axios(`http://localhost:8000/users/profile?id=${id}`, {
+                    withCredentials: true
+                });
                 
-                if (response.ok) {
-                    const data = await response.json();
-                    setProfileData(data);
-                } else {
-                    console.error('Failed to fetch profile data');
-                }
+                const data = response.data
+
+                setProfileData({
+                    firstName: data.user_name.fName,
+                    lastName: data.user_name.lName,
+                    profilePicture: data.user_data.profile_picture,
+                    posts: data.posts,
+                    wishList: data.wish_list ?? []
+                });
+
+                console.log('Reading post data: ', data.posts)
+
             } catch (error) {
                 console.error('Error fetching profile:', error);
             } finally {
                 setLoading(false);
             }
         };
-        
+
         fetchProfileData();
-    }, [username]);
+    }, [id, refresh]);
     
     // State for edit mode
     const [isEditing, setIsEditing] = useState(false);
     const [editForm, setEditForm] = useState({...profileData});
-    
+
     // State for active tab
     const [activeTab, setActiveTab] = useState('posts');
-    
-    // Dummy posts data
-    const [posts] = useState([
-        { 
-            id: 1, 
-            image: 'https://images.unsplash.com/photo-1761405378543-e74453424152?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1964',
-            title: 'Post 1',
-            description: 'A photo I took while shopping',
-            tags: ['Fashion', 'Photography', 'Portraits']
-        },
-        { 
-            id: 2, 
-            image: 'https://images.unsplash.com/photo-1761405378558-3688471ba000?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1964',
-            title: 'Post 2',
-            description: 'Photo from my time travelling up north.',
-            tags: ['Fashion', 'Photography', 'Portraits']
-        },
-        { 
-            id: 3, 
-            image: 'https://images.unsplash.com/photo-1761405378333-9eb3a4658a13?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1965',
-            title: 'Post 3',
-            description: 'Photo I took while walking on the streets of New York.',
-            tags: ['Fashion', 'Photography', 'Street']
-        },
-        { 
-            id: 4, 
-            image: 'https://images.unsplash.com/photo-1761562964790-77f9f5ac45b9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1587',
-            title: 'Post 4',
-            description: 'Photo I took while travelling',
-            tags: ['Fashion', 'Photography', 'Portraits']
-        },
-        { 
-            id: 5, 
-            image: 'https://images.unsplash.com/photo-1761216674297-6ffa4d89400c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1587',
-            title: 'Post 5',
-            description: 'Photo I took in the mountains.',
-            tags: ['Fashion', 'Photography', 'Portraits']
-        },
-        { 
-            id: 6, 
-            image: 'https://images.unsplash.com/photo-1761522001036-dc4a66722464?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=4287',
-            title: 'Post 6',
-            description: 'Portrait I took during my trip to Europe.',
-            tags: ['Fashion', 'Photography', 'Portraits']
-        },
-    ]);
-
-    const handlePostClick = (post) => {
-        const basePath = username ? `/profile/${username}` : '/profile';
-        const destination = `${basePath}/post/${post.id}`;
-        navigate(destination, { state: { post } });
-    };
     
     const handleOpenEdit = () => {
         setEditForm({...profileData});
@@ -124,23 +71,19 @@ function Profile() {
         fileInputRef.current?.click();
     };
     
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
         if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setEditForm({
                     ...editForm,
-                    profilePicture: reader.result
+                    profilePicture: reader.result,
+                    file: file
                 });
             };
             reader.readAsDataURL(file);
         }
-    };
-    
-    const handleSaveProfile = () => {
-        setProfileData({...editForm});
-        setIsEditing(false);
     };
     
     const handleCancelEdit = () => {
@@ -155,22 +98,6 @@ function Profile() {
         });
     };
     
-    const handleWishListChange = (index, value) => {
-        const newWishList = [...editForm.wishList];
-        newWishList[index] = value;
-        setEditForm({
-            ...editForm,
-            wishList: newWishList
-        });
-    };
-    
-    const addWishListItem = () => {
-        setEditForm({
-            ...editForm,
-            wishList: [...editForm.wishList, '']
-        });
-    };
-    
     const removeWishListItem = (index) => {
         const newWishList = editForm.wishList.filter((_, i) => i !== index);
         setEditForm({
@@ -178,6 +105,71 @@ function Profile() {
             wishList: newWishList
         });
     };
+
+    const handleProfileChange = async (e) => {
+        e.preventDefault();
+
+        let updated = false;
+
+        const updatedData = new FormData();
+
+        if (editForm.firstName !== profileData.firstName) {
+            updatedData.append('fName', editForm.firstName);
+        }
+
+        if (editForm.lastName !== profileData.lastName) {
+            updatedData.append('lName', editForm.lastName);
+        }
+
+        if (editForm.wishList !== profileData.wishList) {
+            console.log('Change in wish list!', editForm.wishList)
+            updatedData.append('wishList', JSON.stringify(editForm.wishList));
+        }
+
+        // For updating profile information (name, skills, etc.)
+        if ([...updatedData.keys()].length > 0) {
+            try {
+                await axios.patch(`http://localhost:8000/users/update?id=${id}`, updatedData,
+                    {
+                        withCredentials: true,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    }
+                );
+                console.log('Updated wish list!')
+                updated = true;
+
+            } catch (error) {
+                console.error('Error updating user profile data: ', error)
+            }
+        }
+
+        // For updating pfp
+        if (editForm.file) {
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('file', editForm.file);
+            try {
+                await axios.post(`http://localhost:8000/upload/pfp?id=${id}`, formData, 
+                    {
+                        withCredentials: true,
+                        headers: { 'Content-Type': 'multipart/form-data'}
+                    }
+                );
+
+                updated = true;
+
+                setEditForm({...profileData})
+            } catch (error) {
+                console.error('Error uploading image: ', error)
+            }
+        }
+
+        if (updated) {
+            setIsEditing(false);
+            setRefresh(prev => !prev);
+        }
+    }
+
 
     if (loading) {
         return (
@@ -190,17 +182,20 @@ function Profile() {
         );
     }
 
+    const handleOpenPost = (post_id) => {
+        const post_path = `/profile/${id}/post/${post_id}`;
+        navigate(post_path);
+    }
+
     return (
-        <div className="profile-container">
-            <NavBar />
-       
+        <div className="profile-container">       
             <div className="profile">
                 {isEditing && (
                     <div className="edit-modal-overlay" onClick={handleCancelEdit}>
                         <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
                             <div className="edit-modal-header">
                                 <button className="close-btn" onClick={handleCancelEdit}>×</button>
-                                <button className="update-btn" onClick={handleSaveProfile}>Update</button>
+                                <button className="update-btn" onClick={handleProfileChange}>Update</button>
                             </div>
                             
                             <div className="edit-modal-content">
@@ -249,11 +244,11 @@ function Profile() {
                                             type="text"
                                             placeholder="Add new skill..."
                                             className="edit-input-field"
-                                            onKeyPress={(e) => {
+                                            onKeyDown={(e) => {
                                                 if (e.key === 'Enter' && e.target.value.trim()) {
                                                     setEditForm({
                                                         ...editForm,
-                                                        wishList: [...editForm.wishList, e.target.value.trim()]
+                                                        wishList: [...editForm.wishList, e.target.value.trim().toLowerCase()]
                                                     });
                                                     e.target.value = '';
                                                 }
@@ -262,16 +257,19 @@ function Profile() {
                                     </div>
                                     
                                     <div className="wish-list-edit">
-                                        {editForm.wishList.map((item, index) => (
-                                            <span key={index} className="wish-list-edit-tag">
-                                                {item}
-                                                <button 
-                                                    className="remove-wish-tag-btn"
-                                                    onClick={() => removeWishListItem(index)}
-                                                >
-                                                    ×
-                                                </button>
-                                            </span>
+                                        {editForm.wishList.length === 0 ?
+                                            <></> 
+                                        :
+                                            editForm.wishList.map((item, index) => (
+                                                <span key={index} className="wish-list-edit-tag">
+                                                    {item}
+                                                    <button 
+                                                        className="remove-wish-tag-btn"
+                                                        onClick={() => removeWishListItem(index)}
+                                                    >
+                                                        ×
+                                                    </button>
+                                                </span>
                                         ))}
                                     </div>
                                 </div>
@@ -309,20 +307,17 @@ function Profile() {
                         
                         <div className="profile-stats">
                             <div className="stat">
-                                <span className="stat-number">{profileData.postsCount}</span> Posts
-                            </div>
-                            <div className="stat">
-                                <span className="stat-number">{profileData.followersCount}</span> Followers
-                            </div>
-                            <div className="stat">
-                                <span className="stat-number">{profileData.followingCount}</span> Following
+                                <span className="stat-number">{profileData.posts.length}</span> Posts
                             </div>
                         </div>
                         
                         <div className="wish-list-section">
                             <strong>Wish List:</strong>
                             <div className="wish-list">
-                                {profileData.wishList.map((item, index) => (
+                                {profileData.wishList.length === 0 ? 
+                                <p>Not looking for particular skill</p>
+                                :
+                                profileData.wishList.map((item, index) => (
                                     <span key={index} className="wish-list-tag">
                                         {item}
                                     </span>
@@ -355,35 +350,31 @@ function Profile() {
                 
                 <div className="profile-content">
                     {activeTab === 'posts' && (
-                        <div className="posts-grid">
-                            {posts.map(post => (
-                                <div 
-                                    key={post.id} 
-                                    className="post-item"
-                                    onClick={() => handlePostClick(post)}
-                                    role="button"
-                                    tabIndex={0}
-                                    onKeyDown={(event) => {
-                                        if (event.key === 'Enter' || event.key === ' ') {
-                                            event.preventDefault();
-                                            handlePostClick(post);
-                                        }
-                                    }}
-                                >
-                                    <img src={post.image} alt={post.title || `Post ${post.id}`} />
+                        <>
+                            {profileData.posts.length === 0 ? 
+                                <div className="no-posts-content">
+                                    <p>No posts yet</p>
                                 </div>
-                            ))}
-                        </div>
+                            :
+                                <div className="profile-posts-grid">
+                                    {profileData.posts.map(post => (
+                                        <div key={post.post_id} className="post-item" onClick={() => handleOpenPost(post.post_id)}>
+                                            <img src={post.post_img} alt={`Post ${post.post_id}`} />
+                                        </div>
+                                    ))}
+                                </div>
+                            }
+                        </>
                     )}
                     
                     {activeTab === 'skills' && (
-                        <div className="skills-content">
+                        <div className="no-skills-content">
                             <p>Skills content coming soon...</p>
                         </div>
                     )}
                     
                     {activeTab === 'reviews' && (
-                        <div className="reviews-content">
+                        <div className="no-reviews-content">
                             <p>Reviews content coming soon...</p>
                         </div>
                     )}

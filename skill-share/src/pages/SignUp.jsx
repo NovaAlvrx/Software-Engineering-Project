@@ -1,27 +1,41 @@
 import React, { useState } from "react";
 import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function SignUp() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState(''); 
+
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    email: "",
-    firstName: "",
-    lastName: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const onSubmit = async (e) => {
+      e.preventDefault();
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+      if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+      }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("User Registered:", form);
-    // Later: add backend request here
-  };
+      const formData = new FormData();
+      formData.append('first_name', firstName);
+      formData.append('last_name', lastName);
+      formData.append('email', email);
+      formData.append('password', password);
+
+      try {
+          const response = await axios.post('http://localhost:8000/auth/sign-up', formData, { withCredentials: true })
+          .then(() => navigate('/'));
+          console.log('Sign-up successful:', response.data);
+
+      } catch (error) {
+          // send to 404 page or show error message
+          console.error('Error during sign-up:', error);
+      }
+  }
 
   return (
     <div className="signup-page">
@@ -29,13 +43,13 @@ function SignUp() {
         <h1 className="logo">Skill Swap</h1>
         <h2>Sign Up</h2>
 
-        <form onSubmit={handleSubmit} className="signup-form">
+        <form onSubmit={onSubmit} className="signup-form">
           <input
             type="email"
             name="email"
             placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
@@ -43,8 +57,8 @@ function SignUp() {
             type="text"
             name="firstName"
             placeholder="First Name"
-            value={form.firstName}
-            onChange={handleChange}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             required
           />
 
@@ -52,8 +66,8 @@ function SignUp() {
             type="text"
             name="lastName"
             placeholder="Last Name"
-            value={form.lastName}
-            onChange={handleChange}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             required
           />
 
@@ -63,16 +77,16 @@ function SignUp() {
                 type="password"
                 name="password"
                 placeholder="Password"
-                value={form.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
               <input
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
-                value={form.confirmPassword}
-                onChange={handleChange}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
             </div>

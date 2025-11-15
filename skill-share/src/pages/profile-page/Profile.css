@@ -3,17 +3,18 @@
     flex-direction: row;
     position: relative;
     background-color: #fafafa;
-    margin-left: 264px;
-    width: calc(100% - 264px);
-    min-height: 100vh;
+    left: 0;
+    width: 95%;
+    max-width: 95%;
 }
 
 .profile {
     flex: 1;
     min-height: 100vh;
-    padding: 40px 80px;
+    padding: 40px 0px;
     background-color: white;
     color: #262626;
+    max-width: 100%;
 }
 
 /* Edit Profile Modal */
@@ -342,10 +343,12 @@
     margin-top: 20px;
 }
 
-.posts-grid {
+.profile-posts-grid {
     display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    place-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    max-width: 100%;
 }
 
 .post-item {
@@ -371,13 +374,9 @@
     transform: scale(1.05);
 }
 
-.post-item:focus {
-    outline: 2px solid #0095f6;
-    outline-offset: 4px;
-}
-
-.skills-content,
-.reviews-content {
+.no-posts-content,
+.no-skills-content,
+.no-reviews-content {
     padding: 40px;
     text-align: center;
     color: #8e8e8e;
