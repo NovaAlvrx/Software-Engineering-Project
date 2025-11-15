@@ -10,7 +10,9 @@ function Layout() {
                 <NavBar />
             </div>
             <div className="main-content">
-                <Outlet />
+                <div className="outlet-wrapper">
+                    <Outlet />
+                </div>
             </div>
         </div>
     )
