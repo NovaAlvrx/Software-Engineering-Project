@@ -1,5 +1,5 @@
 .navbar {
-    height: 95vh;
+    height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -37,22 +37,29 @@
     align-items: center;
     text-decoration: none;
     font-size: 18px;
-    margin: 20px 0;
+    padding: 15px 10px;
+    margin: 5px 20px 5px 0px;
     gap: 16px;
+    max-height: 50%;
 }
 
 .nav-item img {
-    width: 24px;
-    height: 24px;
+    width: 10%;
+    height: auto;
+    aspect-ratio: 1;
 }
 
 .nav-item span {
     color: black;
 }
 
+.nav-item:hover {
+    background-color: #e7e7e7da;
+    border-radius: 0.8rem;
+    cursor: pointer;
+}
+
 .profile-img {
-    width: 24px;
-    height: 24px;
     border-radius: 50%;
     border: 1px solid #dbdbdb;
 }
@@ -61,6 +68,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    margin-bottom: 20%;
 }
 
 .more-items {
