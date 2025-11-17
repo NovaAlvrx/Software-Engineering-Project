@@ -1,5 +1,5 @@
-postId,userId,description,createdAt
-1,1,My first try at gardening,2025-01-01
-2,2,Math is fun!,2025-01-02
-3,3,Is playing guiter supposed to be this easy?,2025-01-03
-4,4,Learn python with Alicia,2025-01-04
+postId,userId,description,img,createdAt
+1,1,"My first post","image1.jpg","2025-11-17 12:00:00"
+2,2,"MAth is fun","image2.png","2025-11-17 13:30:00"
+3,3,"Iam learning guitar","image3.jpg","2025-11-17 14:45:00"
+4,4,"Looking for collaboration","image4.png","2025-11-17 15:00:00"

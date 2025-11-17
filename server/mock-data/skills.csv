@@ -1,5 +1,5 @@
 skillId,userId,skillName,skillDescription,skillValue,yearExperience
-1,1,Painting,I have been painting for 5 years and enjoy how colors make the world lively.,Intermediate,1
-2,2,languages,I learned parseltongue and Elvish bu myself. I love learning new languages.,Intermediate,2
-3,3,Cooking, I can cook anything. ,Advanced,3
-4,4,SkillAdmin,Basic skill,Beginner,1
+1,1,Painting,I have been painting for 5 years and enjoy how colors make the world lively.,2,1 year
+2,2,languages,I learned parseltongue and Elvish bu myself. I love learning new languages.,2,6 month
+3,3,Cooking, I can cook anything. ,3,3 years
+4,4,SkillAdmin,Basic skill,1,1 year
