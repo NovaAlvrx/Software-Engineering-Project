@@ -22,7 +22,7 @@
 
 /* The wrapper around the Outlet. It will take remaining space and be scrollable. */
 .outlet-wrapper {
-    width: fit-content;
+    width: 100%;
     flex: 1 1 auto;
     min-height: 0; /* allow children to scroll inside flex */
     overflow-y: auto;
