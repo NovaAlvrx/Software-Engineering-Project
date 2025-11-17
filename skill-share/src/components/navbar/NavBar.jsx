@@ -80,7 +80,7 @@ function NavBar() {
                 </Link>
 
                 <Link to={currentUser ? `/profile/${userId}` : "/login"} className="nav-item">
-                    <img src={profile} alt="Profile" className="nav-item" />
+                    <img src={profile} alt="Profile"/>
                     <span>{currentUser || "Login"}</span>
                 </Link>
             </div>
