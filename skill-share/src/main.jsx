@@ -10,6 +10,7 @@ import PostDetail from './pages/PostDetail.jsx'
 import Explore from './pages/explore-page/Explore.jsx'
 import MockSignUp from './pages/mock-sign-up/MockSignUp.jsx'
 import MockLogin from './pages/mock-login/MockLogin.jsx'
+import Home from './pages/home-page/Home.jsx'
 import {
   BrowserRouter,
   Routes,
@@ -21,7 +22,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<App />} />
+          <Route index element={<Home />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/profile/:id/post/:post_id" element={<PostDetail />} />
           <Route path="/explore" element={<Explore />} />
