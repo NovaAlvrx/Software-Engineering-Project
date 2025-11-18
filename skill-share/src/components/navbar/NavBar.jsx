@@ -19,7 +19,7 @@ import axios from 'axios'
 function NavBar() {
     // Current logged-in user (replace with actual auth context later)
     const [currentUser, setCurrentUser] = useState(null);
-    const [userId, setUserId] = useState(null)
+    const [userId, setUserId] = useState();
     const [showMore, setShowMore] = useState(false);
 
     const navigate = useNavigate()
@@ -28,13 +28,7 @@ function NavBar() {
     useEffect(() => {
         const fetchCurrentUser = async () => {
             try {
-                const token = localStorage.getItem('access_token');
-                if (!token) return;
-
                 const response = await axios.get('http://localhost:8000/auth/me', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
                     withCredentials: true
                 });
 
@@ -50,9 +44,17 @@ function NavBar() {
         fetchCurrentUser();
     }, [userId]);
 
-    const onClickLogout = () => {
-        localStorage.removeItem('access_token');
-        navigate('/login');
+    const onClickLogout = async () => {
+        try {
+            await axios.post('http://localhost:8000/auth/logout', {},
+            { 
+                withCredentials: true 
+            });
+        } catch (e) {
+            console.error('Logout error:', e);
+        } finally {
+            navigate('/login');
+        }
     }
 
     return (
