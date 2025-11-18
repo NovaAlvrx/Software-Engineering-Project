@@ -6,7 +6,7 @@ import Post from '../../components/post/Post.jsx'
 function Home() {
     const [showPosts, setShowPosts] = useState([]);
     const [maxDaysLimit, setMaxDaysLimit] = useState(7);
-
+    
     useEffect(() => {
         const fetchPosts = async () => {
             try {
@@ -16,6 +16,10 @@ function Home() {
                 });
 
                 const data = response.data;
+
+                if (data.posts.length === 0) {
+                    setMaxDaysLimit(prev => prev + 7)
+                }
 
                 // Expecting [{}, {}, ...]
                 if (Array.isArray(data.posts)) {
@@ -31,6 +35,7 @@ function Home() {
                     }));
 
                     setShowPosts(normalized);
+                    console.log('Fetched posts:', normalized);
                 } else {
                     console.warn('Unexpected posts payload', data);
                     setShowPosts([]);
