@@ -31,7 +31,7 @@ function Post({post_details}) {
     const handleToggleLike = async () => {
         // implement modal to log in 
         if (username === '') {
-            console.log('User is not logged in. Cannot like post.')
+            alert('Please log in to like posts.')
             return 
         }
 
