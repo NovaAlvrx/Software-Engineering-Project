@@ -34,7 +34,7 @@
     flex-wrap: wrap;
     max-height: 10%;
     margin-bottom: 0.3rem;
-    width: 90%;
+    width: 80%;
 }
 
 .post-top-wrapper img {
@@ -54,7 +54,7 @@
 }
 
 .post-img {
-    width: 90%;
+    width: 80%;
     height: auto;
     max-height: 50%;
 
