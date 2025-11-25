@@ -1,0 +1,400 @@
+.trade-page {
+    display: flex;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+}
+
+.trade-content {
+    flex: 1;
+    margin-left: 0;
+    padding: 48px 64px;
+    background-color: #fafafa;
+    color: #111827;
+}
+
+.trade-header h1 {
+    margin: 0;
+    font-size: 32px;
+    color: #0f172a;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0 0 4px 0;
+}
+
+.subtitle {
+    margin-top: 12px;
+    color: #4b5563;
+    max-width: 560px;
+}
+
+.trade-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+}
+
+.stat-card {
+    background-color: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.08);
+}
+
+.stat-label {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.stat-value {
+    margin: 4px 0;
+    font-size: 32px;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.stat-helper {
+    font-size: 14px;
+    color: #9ca3af;
+}
+
+.trade-feedback {
+    padding: 12px 16px;
+    background: #ecfeff;
+    border: 1px solid #67e8f9;
+    border-radius: 12px;
+    color: #0369a1;
+    margin-bottom: 24px;
+}
+
+.trade-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.trade-tab {
+    flex: 1 1 220px;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 10px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #4b5563;
+    font-weight: 600;
+    min-width: 200px;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.trade-tab small {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.trade-tab.active {
+    border-color: #c7d2fe;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.15);
+    color: #1d4ed8;
+    background-color: #eef2ff;
+}
+
+.trade-tab.active small {
+    color: #312e81;
+}
+
+.tab-panels {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.panel.tab-panel {
+    min-height: 420px;
+    width: 100%;
+}
+
+.tab-panels .panel {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.panel {
+    background-color: white;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.07);
+}
+
+.panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.panel-heading h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #0f172a;
+}
+
+.badge {
+    background-color: #eef2ff;
+    color: #3730a3;
+    padding: 6px 14px;
+    font-size: 14px;
+    border-radius: 999px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 32px;
+    border: 1px dashed #d1d5db;
+    border-radius: 16px;
+    color: #6b7280;
+}
+
+.trade-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    background-color: #fcfcfc;
+}
+
+.trade-card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    background-color: #e0e7ff;
+}
+
+.avatar.small {
+    width: 42px;
+    height: 42px;
+}
+
+.small-text {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 2px 0 0 0;
+}
+
+.status-pill {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+}
+
+.status-pill.pending {
+    background-color: #fff7ed;
+    color: #c2410c;
+}
+
+.status-pill.accepted {
+    background-color: #ecfdf5;
+    color: #047857;
+}
+
+.status-pill.declined,
+.status-pill.withdrawn {
+    background-color: #fef2f2;
+    color: #b91c1c;
+}
+
+.trade-card-body {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.trade-skill-block {
+    flex: 1;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    padding: 12px 16px;
+}
+
+.trade-skill-block h4 {
+    margin: 4px 0 0 0;
+    font-size: 16px;
+    color: #111827;
+}
+
+.trade-note {
+    margin: 16px 0 4px 0;
+    color: #4b5563;
+}
+
+.trade-note.muted {
+    color: #9ca3af;
+}
+
+.trade-availability {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.trade-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+button.primary,
+button.secondary {
+    border: none;
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button.primary {
+    background-color: #2563eb;
+    color: white;
+}
+
+button.primary:hover {
+    background-color: #1d4ed8;
+}
+
+button.secondary {
+    background-color: #f3f4f6;
+    color: #111827;
+}
+
+button.secondary:hover {
+    background-color: #e5e7eb;
+}
+
+button.compact {
+    padding: 6px 12px;
+}
+
+.full-width {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+}
+
+.trade-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.trade-form label {
+    font-size: 14px;
+    color: #374151;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.trade-form input,
+.trade-form textarea,
+.trade-form select {
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    width: 100%;
+}
+
+.trade-form input:focus,
+.trade-form textarea:focus,
+.trade-form select:focus {
+    outline: 2px solid #c7d2fe;
+    border-color: #a5b4fc;
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.form-row label {
+    flex: 1;
+    min-width: 400px;
+}
+
+.form-row label:nth-child(2) {
+    flex-basis: 100%;
+}
+
+.recommendations {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.recommendation-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.match-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 12px 16px;
+}
+
+.match-details h4 {
+    margin: 0;
+    color: #0f172a;
+}
+
+.outgoing {
+    margin-top: 32px;
+}
+
+@media (max-width: 900px) {
+    .trade-content {
+        margin-left: 0;
+        padding: 32px 20px;
+    }
+
+    .trade-tabs {
+        flex-direction: column;
+    }
+
+    .trade-actions {
+        justify-content: flex-start;
+    }
+}

@@ -1,21 +1,17 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import Login from './pages/Login.jsx'
-import SignUp from './pages/SignUp.jsx'
-import Layout from './routes/Layout.jsx'
-import Profile from './pages/profile-page/Profile.jsx'
-import PostDetail from './pages/PostDetail.jsx'
-import Explore from './pages/explore-page/Explore.jsx'
-import MockSignUp from './pages/mock-sign-up/MockSignUp.jsx'
-import MockLogin from './pages/mock-login/MockLogin.jsx'
-import Home from './pages/home-page/Home.jsx'
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import Login from './pages/Login.jsx';
+import SignUp from './pages/SignUp.jsx';
+import Layout from './routes/Layout.jsx';
+import Profile from './pages/profile-page/Profile.jsx';
+import PostDetail from './pages/PostDetail.jsx';
+import Trade from './pages/Trade.jsx';
+import Explore from './pages/explore-page/Explore.jsx';
+import MockSignUp from './pages/mock-sign-up/MockSignUp.jsx';
+import MockLogin from './pages/mock-login/MockLogin.jsx';
+import Home from './pages/home-page/Home.jsx';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -26,6 +22,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/profile/:id/post/:post_id" element={<PostDetail />} />
           <Route path="/explore" element={<Explore />} />
+          <Route path="/trade" element={<Trade />} />
         </Route>
         <Route path="/mock-sign-up" element={<MockSignUp />} />
         <Route path="/mock-login" element={<MockLogin />} />
