@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NavBar from '../components/NavBar'; // Use the NavBar component provided
+import NavBar from '../components/navbar/NavBar.jsx'; // Use the NavBar component provided
 import './Posts.css';
 
 // --- Reusable Modal Component ---
@@ -71,7 +71,7 @@ function Posts() {
 
   return (
     <div className="posts-page-container">
-      <NavBar /> {/* The persistent navigation bar */}
+      {/* <NavBar /> */} 
 
       <div className="posts-content-area">
         <h2 className="posts-title">New Post</h2>
