@@ -23,7 +23,47 @@ function Profile() {
         postsCount: 0,
         followersCount: 0,
         followingCount: 0,
-        wishList: ['Web Development', 'Moving Photography', 'Cooking', 'Guitar', 'Spanish', 'Yoga']
+        wishList: ['Web Development', 'Moving Photography', 'Cooking', 'Guitar', 'Spanish', 'Yoga'],
+        skills: [
+            {
+                name: 'Photography',
+                level: 'Professional',
+                yearsExperience: 6,
+                description: 'Lifestyle and portrait photographer focused on capturing candid, story-driven moments that highlight authentic emotion.',
+                focusAreas: ['Portrait Sessions', 'Travel & Lifestyle', 'Community Events'],
+                offerings: ['One-on-one coaching for aspiring photographers', 'Creative direction for brand shoots', 'Hands-on editing workshops'],
+                tools: ['Canon EOS R6', 'Adobe Lightroom Classic', 'Capture One Pro']
+            }
+        ],
+        reviews: [
+            {
+                id: 1,
+                reviewerName: 'Jasmine R.',
+                reviewerInitials: 'JR',
+                sessionType: 'Portrait Masterclass',
+                rating: 5,
+                comment: 'Suzuna breaks down complex photography concepts into approachable steps. I finally understand how to work with natural light thanks to her patient guidance.',
+                date: 'October 2024'
+            },
+            {
+                id: 2,
+                reviewerName: 'Marco L.',
+                reviewerInitials: 'ML',
+                sessionType: 'Creative Direction Coaching',
+                rating: 5,
+                comment: 'The one-on-one coaching challenged me to think more critically about storytelling in my shoots. The personalized feedback was exactly what I needed to level up.',
+                date: 'August 2024'
+            },
+            {
+                id: 3,
+                reviewerName: 'Priya S.',
+                reviewerInitials: 'PS',
+                sessionType: 'Editing Workshop',
+                rating: 4,
+                comment: 'Loved the real-time editing walkthroughs! I left with a Lightroom workflow I use every day. Hoping for a follow-up session focused on color grading.',
+                date: 'June 2024'
+            }
+        ]
     });
     
     const [loading, setLoading] = useState(true);
@@ -42,7 +82,12 @@ function Profile() {
                 
                 if (response.ok) {
                     const data = await response.json();
-                    setProfileData(data);
+                    setProfileData(prev => ({
+                        ...prev,
+                        ...data,
+                        skills: data.skills ?? prev.skills,
+                        reviews: data.reviews ?? prev.reviews
+                    }));
                 } else {
                     console.error('Failed to fetch profile data');
                 }
@@ -108,6 +153,8 @@ function Profile() {
             tags: ['Fashion', 'Photography', 'Portraits']
         },
     ]);
+
+    const primarySkill = profileData.skills?.[0];
 
     const handlePostClick = (post) => {
         const basePath = username ? `/profile/${username}` : '/profile';
@@ -378,13 +425,84 @@ function Profile() {
                     
                     {activeTab === 'skills' && (
                         <div className="skills-content">
-                            <p>Skills content coming soon...</p>
+                            <header className="skills-header">
+                                <h2>{primarySkill?.name ?? 'Primary Skill'}</h2>
+                                {primarySkill?.yearsExperience ? (
+                                    <span className="skill-meta">
+                                        {primarySkill.level} • {primarySkill.yearsExperience}+ years experience
+                                    </span>
+                                ) : null}
+                            </header>
+
+                            <p className="skill-description">
+                                {primarySkill?.description ?? 'This creator is currently curating their skill story. Check back soon for a closer look at their craft.'}
+                            </p>
+
+                            <div className="skill-details-grid">
+                                {primarySkill?.focusAreas?.length ? (
+                                    <section className="skill-card">
+                                        <h3>Focus Areas</h3>
+                                        <ul>
+                                            {primarySkill.focusAreas.map(area => (
+                                                <li key={area}>{area}</li>
+                                            ))}
+                                        </ul>
+                                    </section>
+                                ) : null}
+
+                                {primarySkill?.offerings?.length ? (
+                                    <section className="skill-card">
+                                        <h3>How I Can Help</h3>
+                                        <ul>
+                                            {primarySkill.offerings.map(item => (
+                                                <li key={item}>{item}</li>
+                                            ))}
+                                        </ul>
+                                    </section>
+                                ) : null}
+
+                                {primarySkill?.tools?.length ? (
+                                    <section className="skill-card">
+                                        <h3>Gear & Tools</h3>
+                                        <div className="skill-tags">
+                                            {primarySkill.tools.map(tool => (
+                                                <span key={tool} className="skill-tag">{tool}</span>
+                                            ))}
+                                        </div>
+                                    </section>
+                                ) : null}
+                            </div>
                         </div>
                     )}
                     
                     {activeTab === 'reviews' && (
                         <div className="reviews-content">
-                            <p>Reviews content coming soon...</p>
+                            {profileData.reviews?.length ? (
+                                <ul className="reviews-list">
+                                    {profileData.reviews.map(review => (
+                                        <li key={review.id} className="review-card">
+                                            <div className="review-header">
+                                                <div className="reviewer-avatar" aria-hidden="true">
+                                                    {review.reviewerInitials ?? review.reviewerName?.charAt(0) ?? '?'}
+                                                </div>
+                                                <div className="reviewer-meta">
+                                                    <span className="reviewer-name">{review.reviewerName}</span>
+                                                    {review.sessionType ? (
+                                                        <span className="review-session">{review.sessionType}</span>
+                                                    ) : null}
+                                                </div>
+                                                <div className="review-rating" aria-label={`${review.rating} out of 5 stars`}>
+                                                    {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
+                                                </div>
+                                            </div>
+                                            <p className="review-comment">{review.comment}</p>
+                                            {review.date ? <span className="review-date">{review.date}</span> : null}
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No reviews yet. Be the first to share your experience.</p>
+                            )}
                         </div>
                     )}
                 </div>
