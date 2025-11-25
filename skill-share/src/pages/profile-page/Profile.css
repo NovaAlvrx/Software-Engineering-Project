@@ -373,11 +373,177 @@
     transform: scale(1.05);
 }
 
+.post-item:focus {
+    outline: 2px solid #0095f6;
+    outline-offset: 4px;
+}
+
 .no-posts-content,
 .no-skills-content,
 .no-reviews-content {
     padding: 40px;
     text-align: center;
+    color: #8e8e8e;
+}
+
+.skills-content {
+    padding: 40px;
+    text-align: left;
+    color: #262626;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.skills-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skills-header h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.skill-meta {
+    font-size: 15px;
+    color: #8e8e8e;
+    font-weight: 500;
+}
+
+.skill-description {
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+    color: #4a4a4a;
+}
+
+.skill-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.skill-card {
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.skill-card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #262626;
+}
+
+.skill-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #4a4a4a;
+    font-size: 15px;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    background-color: #efefef;
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #262626;
+}
+
+.reviews-content {
+    padding: 40px;
+    color: #262626;
+}
+
+.reviews-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.review-card {
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.reviewer-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.reviewer-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.reviewer-name {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.review-session {
+    font-size: 14px;
+    color: #8e8e8e;
+}
+
+.review-rating {
+    font-size: 16px;
+    color: #f5a623;
+    letter-spacing: 2px;
+}
+
+.review-comment {
+    margin: 0;
+    color: #4a4a4a;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.review-date {
+    font-size: 13px;
     color: #8e8e8e;
 }
 
@@ -406,5 +572,9 @@
     
     .posts-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .skill-details-grid {
+        grid-template-columns: 1fr;
     }
 }
