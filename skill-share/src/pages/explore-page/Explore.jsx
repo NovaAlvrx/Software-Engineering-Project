@@ -17,6 +17,7 @@ const posts = [
 ];
 
 function Explore() {
+  console.log("Explore rendered");
   const [searchTerm, setSearchTerm] = useState("");
   const [activeSearch, setActiveSearch] = useState(""); 
   
@@ -31,7 +32,7 @@ function Explore() {
 );
 
   return (
-    <main className="explore-main">
+    <div className="explore-main">
       <div className="search-bar">
         <input
           type="text"
@@ -42,6 +43,8 @@ function Explore() {
         />
         <button onClick={handleSearch}>Search</button>
       </div>
+
+      <p>Am i being shown?</p>
 
       {activeSearch && displayPosts.length === 0 ? (
         <p className="no-results">No results found for “{activeSearch}”.</p>
@@ -55,7 +58,7 @@ function Explore() {
           ))}
         </div>
       )}
-    </main>
+    </div>
   );
 }
 

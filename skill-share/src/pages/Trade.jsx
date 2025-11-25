@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import NavBar from '../components/NavBar';
 import './Trade.css';
 
 const contacts = [
@@ -253,8 +252,6 @@ function Trade() {
 
   return (
     <div className="trade-page">
-      <NavBar />
-
       <main className="trade-content">
         <header className="trade-header">
           <div>

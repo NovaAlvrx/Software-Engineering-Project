@@ -1,0 +1,15 @@
+.Comment {
+    height: 100%;
+}
+
+#comment-icon, .comment-button {
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1;
+    cursor: pointer;
+}
+
+.comment-button, .like-button {
+    background-color: transparent;
+    border: none;
+}

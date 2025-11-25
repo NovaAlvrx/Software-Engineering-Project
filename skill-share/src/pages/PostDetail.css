@@ -3,13 +3,12 @@
     flex-direction: row;
     min-height: 100vh;
     background-color: #fafafa;
-    margin-left: 264px;
-    width: calc(100% - 264px);
+    width: 90%;
 }
 
 .post-detail {
     flex: 1;
-    padding: 40px 80px;
+    padding: 40px 50px;
     background-color: #ffffff;
 }
 
@@ -32,11 +31,13 @@
     gap: 32px;
     flex-wrap: wrap;
     align-items: flex-start;
+    margin-top: 5%;
 }
 
 .post-detail-image-wrapper {
     flex: 1 1 400px;
     max-width: 600px;
+    max-height: 700px;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
