@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp.jsx'
 import Layout from './routes/Layout.jsx'
 import Profile from './pages/profile-page/Profile.jsx'
 import PostDetail from './pages/PostDetail.jsx'
+import Post from './pages/Posts.jsx'
 import Explore from './pages/explore-page/Explore.jsx'
 import MockSignUp from './pages/mock-sign-up/MockSignUp.jsx'
 import MockLogin from './pages/mock-login/MockLogin.jsx'
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/" element={<Layout />}>
           <Route index element={<App />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/create-post" element={<Post />} />
           <Route path="/profile/:id/post/:post_id" element={<PostDetail />} />
           <Route path="/explore" element={<Explore />} />
         </Route>
