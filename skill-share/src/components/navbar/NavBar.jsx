@@ -21,6 +21,7 @@ function NavBar() {
     const user = useContext(UserContext);  
     const [showMore, setShowMore] = useState(false);
     const username = user ? `${user.fName} ${user.lName}` : null;
+    const userPic = user ? user.profile_picture : profile;
 
     const navigate = useNavigate()
 
@@ -62,7 +63,7 @@ function NavBar() {
                 </Link>
 
                 <Link to={user ? `/profile/${user.id}` : "/login"} className="nav-item">
-                    <img src={profile} alt="Profile"/>
+                    <img src={userPic} alt="Profile" className="user-profile"/>
                     <span>{username || 'Login'}</span>
                 </Link>
             </div>

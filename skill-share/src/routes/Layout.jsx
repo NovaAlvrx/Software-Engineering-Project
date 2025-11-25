@@ -15,7 +15,18 @@ function Layout() {
                 const response = await axios.get("http://localhost:8000/auth/me", {
                     withCredentials: true
                 });
-                setUser(response.data);
+
+                const data = response.data
+                setUser(data);
+
+                if (data) {
+                    const profilePictureResponse = await axios.get(`http://localhost:8000/users/profile?id=${data.id}`, {
+                                                                    withCredentials: true
+                                                                });
+                    const profilePicture = profilePictureResponse.data.user_data.profile_picture; 
+
+                    setUser(prev => prev ? {...prev, profile_picture: profilePicture} : prev);
+                }
             } catch (error) {
                 console.error("Failed to fetch user:", error);
             } finally {

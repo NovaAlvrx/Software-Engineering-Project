@@ -100,3 +100,7 @@
 .more-item:hover {
     text-decoration: underline;
 }
+
+.user-profile {
+    border-radius: 20px;
+}
