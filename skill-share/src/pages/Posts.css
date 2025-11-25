@@ -7,7 +7,7 @@
 }
 
 .posts-content-area {
-  margin-left: 500px; /* Offset for the fixed navigation bar */  /*Change made here on 11/12*/
+  margin-left: 150px; /* Offset for the fixed navigation bar */  /*Change made here on 11/12*/
   flex-grow: 1; /* Takes up remaining space */
   padding: 30px;
   max-width: calc(100% - 250px); /* Ensure content doesn't overflow */
