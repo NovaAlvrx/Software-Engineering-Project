@@ -4,6 +4,7 @@ import search from '../assets/icons/search.png'
 import home from '../assets/icons/home.png'
 import message from '../assets/icons/messages.png'
 import more from '../assets/icons/more.png'
+import exchange from '../assets/icons/exchange.svg'
 import './NavBar.css'
 import { useState, useEffect } from 'react'
 
@@ -49,6 +50,10 @@ function NavBar() {
                 <a href="/search" className="nav-item">
                     <img src={search} alt="Search" />
                     <span>Search</span>
+                </a>
+                <a href="/trade" className="nav-item">
+                    <img src={exchange} alt="Trade" />
+                    <span>Trade</span>
                 </a>
                 <a href="/create" className="nav-item">
                     <img src={create} alt="Create" />

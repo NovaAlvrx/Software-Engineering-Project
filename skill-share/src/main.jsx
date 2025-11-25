@@ -5,6 +5,7 @@ import Login from './pages/Login.jsx'
 import SignUp from './pages/SignUp.jsx'
 import Profile from './pages/Profile.jsx'
 import PostDetail from './pages/PostDetail.jsx'
+import Trade from './pages/Trade.jsx'
 import {
   BrowserRouter,
   Routes,
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/profile/post/:postId" element={<PostDetail />} />
         <Route path="/profile/:username/post/:postId" element={<PostDetail />} />
+        <Route path="/trade" element={<Trade />} />
       </Routes>
     </BrowserRouter>    
   </StrictMode>,
