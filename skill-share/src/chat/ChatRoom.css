@@ -1,0 +1,51 @@
+/*Styling chat room/ dm room*/
+.chat-room {
+  padding: 20px;
+  width: 500px;
+  margin: auto;
+}
+
+.messages {
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 15px;
+  background: #fafafa;
+}
+
+.bubble {
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+  max-width: 80%;
+}
+
+.me {
+  background: #4f93ff;
+  color: white;
+  margin-left: auto;
+  display: block;
+}
+
+.them {
+  background: #e5e5e5;
+  color: black;
+  margin-right: auto;
+  display: block;
+}
+
+.send-box {
+  display: flex;
+  gap: 10px;
+}
+
+.send-box input {
+  flex: 1;
+  padding: 8px;
+}
+
+.send-box button {
+  padding: 8px 15px;
+}

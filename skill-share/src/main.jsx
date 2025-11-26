@@ -10,6 +10,8 @@ import PostDetail from './pages/PostDetail.jsx'
 import Explore from './pages/explore-page/Explore.jsx'
 import MockSignUp from './pages/mock-sign-up/MockSignUp.jsx'
 import MockLogin from './pages/mock-login/MockLogin.jsx'
+import MessageList from "./chat/MessageList.jsx";
+import ChatRoom from "./chat/ChatRoom.jsx"
 import Home from './pages/home-page/Home.jsx'
 import {
   BrowserRouter,
@@ -26,6 +28,9 @@ createRoot(document.getElementById('root')).render(
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/profile/:id/post/:post_id" element={<PostDetail />} />
           <Route path="/explore" element={<Explore />} />
+
+          <Route path="/messages" element={<MessageList />} />
+          <Route path="/messages/:otherUserId" element={<ChatRoom />} />
         </Route>
         <Route path="/mock-sign-up" element={<MockSignUp />} />
         <Route path="/mock-login" element={<MockLogin />} />

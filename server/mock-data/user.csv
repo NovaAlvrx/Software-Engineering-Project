@@ -1,5 +1,5 @@
-userId,Name,email,password,role
-1,tom Jerry,tom@gmail.com,345,USER
-2,Harry Potter,harry@gmail.com,pass2,USER
-3,Samwise gamgee,samwise@gmail.com,pass3,USER
-4,Admin,admin@gmail.com,123,ADMIN
+userId,fName,lName,email,password,role
+1,Samwise,Gamgee,sam.gamgee@example.com,pass123,USER
+2,Jenny,Lopez,j.lopez@example.com,secure456,USER
+3,Alex,Chen,alex.chen@example.com,password789,USER
+4,Admin,Admin,admin.admin@example.com,admin123,ADMIN
