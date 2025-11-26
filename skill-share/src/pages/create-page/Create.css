@@ -1,0 +1,115 @@
+/* src/pages/create-page/Create.css */
+
+.create-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background-color: white; /* Matches the background of your wireframe */
+    min-height: calc(100vh - 80px); /* Adjust based on your NavBar height if needed */
+    box-sizing: border-box;
+  }
+  
+  .title-box {
+    border: 1px solid black;
+    padding: 80px 50px;
+    margin-bottom: 80px; /* Space between title and options */
+    font-size: 1.8em;
+    font-weight: bold;
+    background-color: gray;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .options-container {
+    display: flex;
+    gap: 100px; /* Space between the two option buttons */
+    align-items: center; /* Align arrows and buttons nicely */
+    position: relative;
+    margin-top: 50px; /* Adjust if needed to push content down from title */
+  }
+  
+  /* Styles for the arrows (if you want to implement them visually in CSS) */
+  /* This is a simple representation, for more complex arrows you might use SVGs or pseudo-elements */
+  .options-container::before,
+  .options-container::after {
+    content: '';
+    position: absolute;
+    top: -60px; /* Position above the buttons */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+  }
+  
+  .options-container::before { /* Red arrow */
+    border-top: 100px solid red;
+    left: calc(21% - 10px); /* Adjust to point towards the red box */
+    transform: rotate(0deg); /* Angle the arrow */
+    top: -110px;
+  }
+  
+  .options-container::after { /* Blue arrow */
+    border-top: 100px solid blue;
+    right: calc(21% - 10px); /* Adjust to point towards the blue box */
+    transform: rotate(0deg); /* Angle the arrow */
+    top: -110px;
+  }
+  
+  
+  .option-link {
+    text-decoration: none; /* Remove underline from Link component */
+    color: inherit; /* Inherit text color */
+  }
+  
+  .option-button {
+    width: 280px; /* Fixed width for the buttons */
+    height: 120px; /* Fixed height for the buttons */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 15px; /* Rounded corners */
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .option-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .red-button {
+    background-color: #ff5252; /* Red color for 'Create a Post' */
+    border: 2px solid #b71c1c; /* Darker red border */
+    color: white;
+  }
+  
+  .blue-button {
+    background-color: #448aff; /* Blue color for 'Create a Session Review' */
+    border: 2px solid #0d47a1; /* Darker blue border */
+    color: white;
+  }
+  
+  /* Optional: Adjust for smaller screens */
+  @media (max-width: 768px) {
+    .options-container {
+      flex-direction: column;
+      gap: 50px;
+    }
+  
+    .title-box {
+      font-size: 1.5em;
+      padding: 15px 30px;
+      margin-bottom: 60px;
+    }
+  
+    .option-button {
+      width: 250px;
+      height: 100px;
+      font-size: 1.3em;
+    }
+}
