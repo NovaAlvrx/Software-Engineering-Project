@@ -4,15 +4,17 @@ import axios from 'axios'
 import LikeComponent from '../like/Like.jsx'
 import CommentComponent from '../comment/Comment.jsx'
 import { UserContext} from '../../context/UserContext.jsx'
-import AllComments from '../all-comments/all-comments.jsx'
+import AllComments from '../all-comments/AllComments.jsx'
 
 function Post({post_details}) {
     const [username, setUsername] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
     const [likes, setLikes] = useState(post_details.likeCount || 0);
-    const [isLiked, setIsLiked] = useState(post_details.likedByUser || false)
+    const [isLiked, setIsLiked] = useState(post_details.likedByUser || false);
+    const [comments, setComments] = useState();
+    const postId = post_details.postId;
     const [commentsOpen, setCommentsOpen] = useState(false);
-    const user = useContext(UserContext)
+    const user = useContext(UserContext);
 
     useEffect(() => {
         const fetchUserName = async () => {
@@ -28,6 +30,22 @@ function Post({post_details}) {
         }
 
         fetchUserName();
+
+        const fetchComments = async () => {
+            const response = await axios('http://localhost:8000/posts/comments', {
+                params: { postId: postId },
+                withCredentials: true
+            });
+
+            const data = response.data;
+
+            if (data) {
+                setComments(data.comments);
+                console.log(data.comments)
+            }
+        }
+
+        fetchComments();
     }, [post_details.userId]);
 
     const handleToggleLike = async () => {
@@ -90,7 +108,7 @@ function Post({post_details}) {
             <div className="post-comments-section">
                 {commentsOpen ? (
                     <div className='comments-section-wrapper'>
-                        <AllComments />
+                        <AllComments post_comments={comments}/>
                     </div>
                 ) : (<></>)}
             </div>
