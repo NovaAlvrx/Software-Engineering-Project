@@ -107,8 +107,16 @@ function Post({post_details}) {
             </div>
             <div className="post-comments-section">
                 {commentsOpen ? (
-                    <div className='comments-section-wrapper'>
-                        <AllComments post_comments={comments}/>
+                    <div className="post-comments-section">
+                        <div className='comments-section-wrapper'>
+                            <AllComments post_comments={comments}/>
+                        </div>
+                        <div className='post-comment-wrapper'>
+                            <form id="post-comment">
+                                <input id="comment-content"></input>
+                                <input type="submit" text="Post" id="submit-comment"></input>
+                            </form>
+                        </div>
                     </div>
                 ) : (<></>)}
             </div>
