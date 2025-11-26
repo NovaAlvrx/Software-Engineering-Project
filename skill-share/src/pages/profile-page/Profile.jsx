@@ -2,7 +2,7 @@ import './Profile.css'
 import { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import Loading from '../../components/loading/Loading.jsx'
+import Loading from '../../components/Loading/Loading'
 
 function Profile() {
     const { id } = useParams();
