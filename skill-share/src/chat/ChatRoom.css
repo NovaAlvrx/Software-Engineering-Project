@@ -1,29 +1,51 @@
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 600px;
+/*Styling chat room/ dm room*/
+.chat-room {
+  padding: 20px;
+  width: 500px;
   margin: auto;
 }
 
-.chat-input-form {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.chat-input-form input {
-  flex: 1;
+.messages {
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
   padding: 10px;
-  border-radius: 12px;
-  border: 1px solid #dbdbdb;
+  margin-bottom: 15px;
+  background: #fafafa;
 }
 
-.chat-input-form button {
-  padding: 10px 16px;
-  border-radius: 12px;
-  border: none;
-  background-color: #0095f6;
+.bubble {
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+  max-width: 80%;
+}
+
+.me {
+  background: #4f93ff;
   color: white;
-  cursor: pointer;
+  margin-left: auto;
+  display: block;
+}
+
+.them {
+  background: #e5e5e5;
+  color: black;
+  margin-right: auto;
+  display: block;
+}
+
+.send-box {
+  display: flex;
+  gap: 10px;
+}
+
+.send-box input {
+  flex: 1;
+  padding: 8px;
+}
+
+.send-box button {
+  padding: 8px 15px;
 }

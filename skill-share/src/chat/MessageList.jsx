@@ -1,65 +1,57 @@
-import { useState, useEffect } from "react";
+//importing libraries, hooks and css component
+import { useEffect, useState } from "react"; 
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./MessageList.css";
 
-function MessageList({ currentUserId, recipientId }) {
-  const [messages, setMessages] = useState([]);
-  const [newMsg, setNewMsg] = useState("");
+export default function MessageList() {
+  const [conversations, setConversations] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
 
-  // Polling messages every 2 seconds
   useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/chat/${currentUserId}/${recipientId}`);
-        setMessages(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+    const token = localStorage.getItem("access_token");
+    if (!token) return;
 
-    fetchMessages();
-    const interval = setInterval(fetchMessages, 2000);
-    return () => clearInterval(interval);
-  }, [currentUserId, recipientId]);
+    // Fetch logged-in user
+    axios
+      .get("http://localhost:8000/auth/me", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(res => {
+        setCurrentUser(res.data);
+        return res.data.id;
+      })
+      .then(userId => {
+        // Fetch conversations after fetching userId
+        axios
+          .get(`http://localhost:8000/chat/conversations/${userId}`, {
+            headers: { Authorization: `Bearer ${token}` }
+          })
+          .then(res => setConversations(res.data))
+          .catch(console.error);
+      })
+      .catch(console.error);
+  }, []);
 
-  const sendMessage = async () => {
-    if (!newMsg) return;
-    try {
-      await axios.post("http://localhost:8000/chat/", {
-        sender_id: currentUserId,
-        recipient_id: recipientId,
-        content: newMsg,
-      });
-      setNewMsg("");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  if (!currentUser) return <p>Loading...</p>;
 
   return (
-    <div className="chat-container">
-      <div className="messages-list">
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`message ${msg.sender_id === currentUserId ? "sent" : "received"}`}
-          >
-            {msg.content}
-          </div>
-        ))}
-      </div>
-      <div className="chat-input">
-        <input
-          type="text"
-          value={newMsg}
-          onChange={(e) => setNewMsg(e.target.value)}
-          placeholder="Type a message..."
-        />
-        <button onClick={sendMessage}>Send</button>
-      </div>
+    <div className="messages-list">
+      <h3>Your Conversations</h3>
+
+      {conversations.length === 0 && <p>No conversations found.</p>}
+
+      {conversations.map(c => (
+        <div
+          key={c.conversationId}
+          className="conversation-item"
+          onClick={() => navigate(`/messages/${c.otherUserId}`)}
+        >
+          <strong>User {c.otherUserId}</strong>
+          <p>{c.lastMessage}</p>
+        </div>
+      ))}
     </div>
   );
 }
-
-export default MessageList;
-
