@@ -1,7 +1,9 @@
 .Home {
     height: auto;
     margin-top: 5rem;
-    width: 70%;
+    width: 90%;
+    max-width: 90%;
     scrollbar-width: none;
+    overflow-x: hidden;
 }
 
