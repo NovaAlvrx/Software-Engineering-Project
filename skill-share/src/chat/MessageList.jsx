@@ -16,7 +16,7 @@ export default function MessageList() {
     // Fetch logged-in user
     axios
       .get("http://localhost:8000/auth/me", {
-        headers: { Authorization: `Bearer ${token}` }
+        withCredentials: true
       })
       .then(res => {
         setCurrentUser(res.data);
@@ -26,7 +26,7 @@ export default function MessageList() {
         // Fetch conversations after fetching userId
         axios
           .get(`http://localhost:8000/chat/conversations/${userId}`, {
-            headers: { Authorization: `Bearer ${token}` }
+            withCredentials: true
           })
           .then(res => setConversations(res.data))
           .catch(console.error);

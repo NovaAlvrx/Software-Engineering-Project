@@ -17,7 +17,7 @@ export default function ChatRoom() {
     // Fetch logged-in user
     axios
       .get("http://localhost:8000/auth/me", {
-        headers: { Authorization: `Bearer ${token}` }
+        withCredentials: true
       })
       .then(res => {
         setCurrentUser(res.data);
@@ -27,7 +27,7 @@ export default function ChatRoom() {
         // Fetch messages after we have userId
         axios
           .get(`http://localhost:8000/chat/${userId}/${otherUserId}`, {
-            headers: { Authorization: `Bearer ${token}` }
+            withCredentials: true
           })
           .then(res => setMessages(res.data))
           .catch(console.error);
@@ -48,7 +48,7 @@ export default function ChatRoom() {
           recipient_id: Number(otherUserId),
           content: text
         },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { withCredentials: true }
       )
       .then(res => {
         setMessages(prev => [...prev, res.data]);
