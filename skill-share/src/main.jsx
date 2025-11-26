@@ -12,6 +12,7 @@ import MockSignUp from './pages/mock-sign-up/MockSignUp.jsx'
 import MockLogin from './pages/mock-login/MockLogin.jsx'
 import MessageList from "./chat/MessageList.jsx";
 import ChatRoom from "./chat/ChatRoom.jsx"
+import Home from './pages/home-page/Home.jsx'
 import {
   BrowserRouter,
   Routes,
@@ -23,7 +24,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<App />} />
+          <Route index element={<Home />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/profile/:id/post/:post_id" element={<PostDetail />} />
           <Route path="/explore" element={<Explore />} />
