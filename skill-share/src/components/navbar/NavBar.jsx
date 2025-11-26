@@ -9,6 +9,7 @@ import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { UserContext } from "../../context/UserContext.jsx";
+import SkillSwapLogo from '../../assets/img/SkillSwap_logo4.png'
 
 /**
  * Add additional functionality to NavBar such as:
@@ -40,8 +41,8 @@ function NavBar() {
 
     return (
         <nav className="navbar">
-            <div className="nav-logo flex-column-center">
-                Skill <br/> Swap
+            <div className="nav-logo flex-column-center-start">
+                <img src={SkillSwapLogo} alt='logo'/>
             </div>
 
             <div className="nav-links">
