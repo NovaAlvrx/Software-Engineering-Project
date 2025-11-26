@@ -1,0 +1,92 @@
+.Post {
+    height: auto;
+    margin-top: 2rem;
+    margin-left: 12rem;
+    padding-left: 3rem;
+
+    border-bottom: solid 0.8px grey;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.flex-row-start {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;    
+}
+
+.flex-row-center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.space-between {
+    display: inherit;
+    justify-content: space-between;
+}
+
+.post-top-wrapper {
+    flex-wrap: wrap;
+    max-height: 10%;
+    margin-bottom: 0.3rem;
+    width: 80%;
+}
+
+.post-top-wrapper img {
+    max-height: 2.5rem;
+    width: auto;
+    aspect-ratio: 1;
+    border-radius: 3rem;
+}
+
+.post-top-wrapper p {
+    margin: 0.8rem;
+}
+
+.posted-by {
+    color: black;
+    font-weight: bold;
+}
+
+.post-img {
+    width: 80%;
+    height: auto;
+    max-height: 50%;
+
+    border: 0.2px solid grey;
+    border-radius: 0.8rem;
+}
+
+.post-like-comment-wrapper {
+    gap: 1.5rem;
+    width: 50%;
+    margin-top: 0.5rem;
+    height: 1.8rem;
+}
+
+.number-of-likes, .number-of-comments {
+    color: black;
+    margin-left: 0.3rem;
+}
+
+.post-bottom-wrapper {
+    margin-left: 0.8rem;
+    margin-bottom: 2rem;
+}
+
+.post-description-wrapper {
+    gap: 0.5rem;
+}
+
+.post-description {
+    color: black
+}
+
+.post-creation-text {
+    color: grey;
+}

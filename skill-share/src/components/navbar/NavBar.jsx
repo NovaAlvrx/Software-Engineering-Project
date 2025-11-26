@@ -5,9 +5,10 @@ import home from '../../assets/icons/home.png'
 import message from '../../assets/icons/messages.png'
 import more from '../../assets/icons/more.png'
 import './NavBar.css'
-import { useState, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { UserContext } from "../../context/UserContext.jsx";
 
 /**
  * Add additional functionality to NavBar such as:
@@ -17,42 +18,23 @@ import axios from 'axios'
  */
 
 function NavBar() {
-    // Current logged-in user (replace with actual auth context later)
-    const [currentUser, setCurrentUser] = useState(null);
-    const [userId, setUserId] = useState(null)
+    const user = useContext(UserContext);  
     const [showMore, setShowMore] = useState(false);
+    const username = user ? `${user.fName} ${user.lName}` : null;
 
     const navigate = useNavigate()
-    
-    // Fetch logged-in user's data
-    useEffect(() => {
-        const fetchCurrentUser = async () => {
-            try {
-                const token = localStorage.getItem('access_token');
-                if (!token) return;
 
-                const response = await axios.get('http://localhost:8000/auth/me', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                    withCredentials: true
-                });
-
-                const userData = response.data
-                setCurrentUser(userData.fName + ' ' + userData.lName);
-                setUserId(userData.id);
-                console.log('user id: ', userId)
-            } catch (error) {
-                console.error('Error fetching current user:', error);
-            }
-        };
-        
-        fetchCurrentUser();
-    }, [userId]);
-
-    const onClickLogout = () => {
-        localStorage.removeItem('access_token');
-        navigate('/login');
+    const onClickLogout = async () => {
+        try {
+            await axios.post('http://localhost:8000/auth/logout', {},
+            { 
+                withCredentials: true 
+            });
+        } catch (e) {
+            console.error('Logout error:', e);
+        } finally {
+            navigate('/login');
+        }
     }
 
     return (
@@ -79,9 +61,9 @@ function NavBar() {
                     <span>Messages</span>
                 </Link>
 
-                <Link to={currentUser ? `/profile/${userId}` : "/login"} className="nav-item">
-                    <img src={profile} alt="Profile" className="nav-item" />
-                    <span>{currentUser || "Login"}</span>
+                <Link to={user ? `/profile/${user.id}` : "/login"} className="nav-item">
+                    <img src={profile} alt="Profile"/>
+                    <span>{username || 'Login'}</span>
                 </Link>
             </div>
 
