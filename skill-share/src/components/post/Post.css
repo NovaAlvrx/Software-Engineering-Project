@@ -1,10 +1,29 @@
 .Post {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
     height: auto;
-    margin-top: 2rem;
-    margin-left: 12rem;
-    padding-left: 3rem;
+    padding-left: 10rem;
+    margin-left: 2rem;
+}
 
-    border-bottom: solid 0.8px grey;
+.post-container {
+    width: 60%;
+    max-width: 60%;
+    min-width: 470px;
+    height: auto;
+    max-height: 800px;
+}
+
+.comments-open {
+    transform: translateX(-120px);
+    transition: transform 0.3s;
+}
+
+.comments-closed {
+    transform: translateX(0);
+    transition: transform 0.3s;
 }
 
 .flex-column {
@@ -42,6 +61,10 @@
     width: auto;
     aspect-ratio: 1;
     border-radius: 3rem;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #d0d6dc;
 }
 
 .post-top-wrapper p {
@@ -56,7 +79,8 @@
 .post-img {
     width: 80%;
     height: auto;
-    max-height: 50%;
+    max-height: 600px;
+    object-fit: cover;
 
     border: 0.2px solid grey;
     border-radius: 0.8rem;
@@ -88,5 +112,14 @@
 }
 
 .post-creation-text {
-    color: grey;
+    color: #718396;
+}
+
+.post-comments-section {
+    width: 40%;
+    max-width: 40%;
+    min-width: 470px;
+    margin-right: 2rem;
+    margin-top: 4rem;
+    max-height: 80%;
 }

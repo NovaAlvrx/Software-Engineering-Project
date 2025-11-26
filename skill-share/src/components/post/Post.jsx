@@ -4,12 +4,14 @@ import axios from 'axios'
 import LikeComponent from '../like/Like.jsx'
 import CommentComponent from '../comment/Comment.jsx'
 import { UserContext} from '../../context/UserContext.jsx'
+import AllComments from '../all-comments/all-comments.jsx'
 
 function Post({post_details}) {
     const [username, setUsername] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
     const [likes, setLikes] = useState(post_details.likeCount || 0);
     const [isLiked, setIsLiked] = useState(post_details.likedByUser || false)
+    const [commentsOpen, setCommentsOpen] = useState(false);
     const user = useContext(UserContext)
 
     useEffect(() => {
@@ -52,31 +54,45 @@ function Post({post_details}) {
         }
     }
 
+    const handleOpenComments = () => {
+        setCommentsOpen(prev => !prev);
+        console.log('Comments open: ', commentsOpen);
+    }
+
     return (
-        <div className="Post flex-column">
-            <div className="flex-row-center post-top-wrapper space-between">
-                <div className="flex-row-center">
-                    <img src={profilePicture} alt='user-profile'/>
-                    <p className="posted-by">{username}</p>
+        <div className={`Post ${commentsOpen ? 'comments-open' : 'comments-closed'}`}>
+            <div className="post-container flex-column">
+                <div className="flex-row-center post-top-wrapper space-between">
+                    <div className="flex-row-center">
+                        <img src={profilePicture} alt='user-profile' className='top-wrapper-pfp'/>
+                        <p className="posted-by">{username}</p>
+                    </div>
+                    <p className="post-creation-text">{post_details.created_date}</p>
                 </div>
-                <p className="post-creation-text">{post_details.created_date}</p>
+                <img src={post_details.img} alt="post" className="post-img" onDoubleClick={handleToggleLike} />
+                <div className="post-bottom-wrapper">
+                    <div className="post-like-comment-wrapper flex-row-start">
+                        <div className="flex-row-center">
+                            <LikeComponent liked={isLiked} onToggle={handleToggleLike} />
+                            <p className="number-of-likes">{likes}</p>
+                        </div>
+                        <div className="flex-row-center">
+                            <CommentComponent onToggle={handleOpenComments}/>
+                            <p className="number-of-comments">0</p>
+                        </div>
+                    </div>
+                    <div className="flex-row-start post-description-wrapper">
+                        <p className="posted-by">{username}</p>
+                        <p className="post-description">{post_details.description}</p>
+                    </div>
+                </div>
             </div>
-            <img src={post_details.img} alt="post" className="post-img" onDoubleClick={handleToggleLike} />
-            <div className="post-bottom-wrapper">
-                <div className="post-like-comment-wrapper flex-row-start">
-                    <div className="flex-row-center">
-                        <LikeComponent liked={isLiked} onToggle={handleToggleLike} />
-                        <p className="number-of-likes">{likes}</p>
+            <div className="post-comments-section">
+                {commentsOpen ? (
+                    <div className='comments-section-wrapper'>
+                        <AllComments />
                     </div>
-                    <div className="flex-row-center">
-                        <CommentComponent />
-                        <p className="number-of-comments">0</p>
-                    </div>
-                </div>
-                <div className="flex-row-start post-description-wrapper">
-                    <p className="posted-by">{username}</p>
-                    <p className="post-description">{post_details.description}</p>
-                </div>
+                ) : (<></>)}
             </div>
         </div>
     )
