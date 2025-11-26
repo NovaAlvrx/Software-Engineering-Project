@@ -19,7 +19,7 @@
 
 .nav-logo {
     height: 15%;
-    width: 90%;
+    width: 70%;
 }
 
 .nav-logo img{
@@ -43,6 +43,7 @@
     margin: 5px 20px 5px 0px;
     gap: 16px;
     max-height: 50%;
+    font-weight: 450;
 }
 
 .nav-item img {
