@@ -12,6 +12,8 @@ function Post({post_details}) {
     const [likes, setLikes] = useState(post_details.likeCount || 0);
     const [isLiked, setIsLiked] = useState(post_details.likedByUser || false);
     const [comments, setComments] = useState();
+    const [commentsCount, setCommentsCount] = useState(0)
+    const [newComment, setNewComment] = useState('')
     const postId = post_details.postId;
     const [commentsOpen, setCommentsOpen] = useState(false);
     const user = useContext(UserContext);
@@ -41,6 +43,7 @@ function Post({post_details}) {
 
             if (data) {
                 setComments(data.comments);
+                setCommentsCount(data.comments.length)
                 console.log(data.comments)
             }
         }
@@ -77,6 +80,33 @@ function Post({post_details}) {
         console.log('Comments open: ', commentsOpen);
     }
 
+    const handleAddComment = async (e) => {
+        e.preventDefault();
+
+        console.log('Adding comment for: ', postId, user.id, newComment)
+
+        if (newComment.trim().length === 0) return;
+
+        const response = await axios.post('http://localhost:8000/posts/add_comment',
+            { postId: postId, userId: user.id, comment: newComment},
+            { withCredentials: true }
+        )
+
+        if (response) {
+            setComments(prev => [
+                ...prev,
+                {
+                    "comment": newComment,
+                    "user": `${user.fName} ${user.lName}`,
+                    "pfp": user.profile_picture
+                }
+            ])
+
+            setNewComment('');
+            setCommentsCount(prev => prev + 1)
+        }
+    }
+
     return (
         <div className={`Post ${commentsOpen ? 'comments-open' : 'comments-closed'}`}>
             <div className="post-container flex-column">
@@ -96,7 +126,7 @@ function Post({post_details}) {
                         </div>
                         <div className="flex-row-center">
                             <CommentComponent onToggle={handleOpenComments}/>
-                            <p className="number-of-comments">0</p>
+                            <p className="number-of-comments">{commentsCount}</p>
                         </div>
                     </div>
                     <div className="flex-row-start post-description-wrapper">
@@ -113,8 +143,17 @@ function Post({post_details}) {
                         </div>
                         <div className='post-comment-wrapper'>
                             <form id="post-comment">
-                                <input id="comment-content"></input>
-                                <input type="submit" text="Post" id="submit-comment"></input>
+                                <input 
+                                    id='comment-content'
+                                    value={newComment}
+                                    onChange={e => setNewComment(e.target.value)}
+                                />
+                                <input 
+                                    type="submit"
+                                    text="Post"
+                                    id="submit-comment" 
+                                    onClick={e => handleAddComment(e)} 
+                                />
                             </form>
                         </div>
                     </div>

@@ -67,7 +67,6 @@ async def get_comments(params: FetchCommentsRequest = Depends()):
             commenter_details = await get_commenter(comment.userId)
 
             comments_details.append({
-                "comment_id": comment.commentId,
                 "comment": comment.content,
                 "user": commenter_details['username'],
                 "pfp": commenter_details['profile_pic']
@@ -81,12 +80,14 @@ async def get_comments(params: FetchCommentsRequest = Depends()):
         raise HTTPException(status_code=500, detail=str(e))
     
 @router.post('/add_comment')
-async def add_comment(data: AddCommentRequest):
+async def add_comment(params: AddCommentRequest):
+    print('Adding comment: ', params)
     try:
         await db.comment.create(data={
-                        "postId": data.postId, 
-                        "userId": data.userId, 
-                        "content": data.comment})
+                        "postId": params.postId, 
+                        "userId": params.userId, 
+                        "content": params.comment})
+        
         return {"Message": "Comment added"}
     except Exception as e:
         print('Error adding comment: ', e)
