@@ -3,15 +3,14 @@
     flex-direction: row;
     position: relative;
     background-color: #fafafa;
-    left: 2rem;
-    width: 95%;
-    max-width: 95%;
+    width: 100%;
+    max-width: 100%;
 }
 
 .profile {
     flex: 1;
     min-height: 100vh;
-    padding: 40px 0px;
+    padding: 40px 24px;
     background-color: white;
     color: #262626;
     max-width: 100%;
@@ -46,7 +45,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 12px 16px;
-    border-bottom: 1px solid #dbdbdb;
+    border-bottom: 1px solid #b8c1cb;
 }
 
 .edit-modal-header h2 {

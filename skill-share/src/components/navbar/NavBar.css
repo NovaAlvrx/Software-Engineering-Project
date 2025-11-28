@@ -11,17 +11,19 @@
     background-color: white;
 }
 
-.flex-column-center {
+.flex-column-center-start {
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: center;
 }
 
 .nav-logo {
     height: 15%;
+    width: 70%;
+}
 
-    font-size: 36px;
-    color: black;
+.nav-logo img{
+    width: 100%;
 }
 
 .nav-links {
@@ -41,12 +43,13 @@
     margin: 5px 20px 5px 0px;
     gap: 16px;
     max-height: 50%;
+    font-weight: 450;
 }
 
 .nav-item img {
-    width: 10%;
-    height: auto;
-    aspect-ratio: 1;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
 }
 
 .nav-item span {
@@ -99,4 +102,12 @@
 
 .more-item:hover {
     text-decoration: underline;
+}
+
+.user-profile {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #dbdbdb;
 }

@@ -9,6 +9,7 @@ import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { UserContext } from "../../context/UserContext.jsx";
+import SkillSwapLogo from '../../assets/img/SkillSwap_logo4.png'
 
 /**
  * Add additional functionality to NavBar such as:
@@ -21,6 +22,7 @@ function NavBar() {
     const user = useContext(UserContext);  
     const [showMore, setShowMore] = useState(false);
     const username = user ? `${user.fName} ${user.lName}` : null;
+    const userPic = user ? user.profile_picture : profile;
 
     const navigate = useNavigate()
 
@@ -39,8 +41,8 @@ function NavBar() {
 
     return (
         <nav className="navbar">
-            <div className="nav-logo flex-column-center">
-                Skill <br/> Swap
+            <div className="nav-logo flex-column-center-start">
+                <img src={SkillSwapLogo} alt='logo'/>
             </div>
 
             <div className="nav-links">
@@ -62,7 +64,7 @@ function NavBar() {
                 </Link>
 
                 <Link to={user ? `/profile/${user.id}` : "/login"} className="nav-item">
-                    <img src={profile} alt="Profile"/>
+                    <img src={userPic} alt="Profile" className="user-profile"/>
                     <span>{username || 'Login'}</span>
                 </Link>
             </div>
