@@ -17,6 +17,7 @@ function Post({post_details}) {
     const postId = post_details.postId;
     const [commentsOpen, setCommentsOpen] = useState(false);
     const user = useContext(UserContext);
+    const userId = user?.id;
 
     useEffect(() => {
         const fetchUserName = async () => {
@@ -49,11 +50,11 @@ function Post({post_details}) {
         }
 
         fetchComments();
-    }, [post_details.userId]);
+    }, [post_details.userId, postId]);
 
     const handleToggleLike = async () => {
         // implement modal to log in 
-        if (username === '') {
+        if (!userId) {
             alert('Please log in to like posts.')
             return 
         }
@@ -63,12 +64,12 @@ function Post({post_details}) {
 
         if (!isLiked) {
             await axios.post('http://localhost:8000/posts/toggle-like', 
-                            { userId: user.id, postId: post_details.postId}, 
+                            { userId, postId: post_details.postId}, 
                             { withCredentials: true });
         } else {
             await axios.delete('http://localhost:8000/posts/toggle-unlike', 
                             {
-                                data: {userId: user.id, postId: post_details.postId},
+                                data: {userId, postId: post_details.postId},
                                 withCredentials: true
                             }
                         );
@@ -83,12 +84,17 @@ function Post({post_details}) {
     const handleAddComment = async (e) => {
         e.preventDefault();
 
-        console.log('Adding comment for: ', postId, user.id, newComment)
+        console.log('Adding comment for: ', postId, userId, newComment)
+
+        if (!userId) {
+            alert('Please log in to comment.');
+            return;
+        }
 
         if (newComment.trim().length === 0) return;
 
         const response = await axios.post('http://localhost:8000/posts/add_comment',
-            { postId: postId, userId: user.id, comment: newComment},
+            { postId: postId, userId: userId, comment: newComment},
             { withCredentials: true }
         )
 

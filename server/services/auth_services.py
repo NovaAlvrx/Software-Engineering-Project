@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import os
 import jwt
 from datetime import datetime, timedelta, timezone
+from typing import Optional
 from jwt.exceptions import InvalidTokenError
 
 load_dotenv()
@@ -23,7 +24,7 @@ ALGORITHM = os.getenv("ALGORITHM")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-async def create_token(data: dict, expires_delta: timedelta | None = None):
+async def create_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta

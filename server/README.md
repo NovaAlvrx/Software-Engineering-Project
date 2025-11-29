@@ -17,6 +17,11 @@ venv\Scripts\activate  # On Windows
 pip install -r requirements.txt
 ```
 
+3. Generate the Prisma client (required for `from prisma import Prisma` imports):
+```bash
+python -m prisma generate
+```
+
 ## Running the Server
 
 Make sure your virtual environment is activated, then run:
