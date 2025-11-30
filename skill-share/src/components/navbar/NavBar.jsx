@@ -4,6 +4,7 @@ import search from '../../assets/icons/search.png'
 import home from '../../assets/icons/home.png'
 import message from '../../assets/icons/messages.png'
 import more from '../../assets/icons/more.png'
+import exchange from '../../assets/icons/exchange.svg'
 import './NavBar.css'
 import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -53,6 +54,10 @@ function NavBar() {
                 <Link to="/explore" className="nav-item">
                     <img src={search} alt="Search" />
                     <span>Explore</span>
+                </Link>
+                <Link to="/trade" className="nav-item">
+                    <img src={exchange} alt="Trade" />
+                    <span>Trade</span>
                 </Link>
                 <Link to="/create" className="nav-item">
                     <img src={create} alt="Create" />

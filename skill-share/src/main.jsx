@@ -1,7 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/SignUp.jsx'
 import Layout from './routes/Layout.jsx'
@@ -14,6 +13,7 @@ import MockLogin from './pages/mock-login/MockLogin.jsx'
 import MessageList from "./chat/MessageList.jsx";
 import ChatRoom from "./chat/ChatRoom.jsx"
 import Home from './pages/home-page/Home.jsx'
+import Trade from './pages/Trade.jsx'
 import {
   BrowserRouter,
   Routes,
@@ -26,12 +26,12 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/profile/:id/post/:post_id" element={<PostDetail />} />
-          <Route path="/explore" element={<Explore />} />
-
-          <Route path="/messages" element={<MessageList />} />
-          <Route path="/messages/:otherUserId" element={<ChatRoom />} />
+          <Route path="profile/:id" element={<Profile />} />
+          <Route path="profile/:id/post/:post_id" element={<PostDetail />} />
+          <Route path="explore" element={<Explore />} />
+          <Route path="messages" element={<MessageList />} />
+          <Route path="messages/:otherUserId" element={<ChatRoom />} />
+          <Route path="trade" element={<Trade />} />
         </Route>
         <Route path="/mock-sign-up" element={<MockSignUp />} />
         <Route path="/mock-login" element={<MockLogin />} />

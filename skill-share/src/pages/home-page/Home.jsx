@@ -8,14 +8,21 @@ function Home() {
     const [showPosts, setShowPosts] = useState([]);
     const [maxDaysLimit, setMaxDaysLimit] = useState(7);
     const user = useContext(UserContext);
+    const userId = user?.id;
 
-    console.log('Home Page - userId from context:', user.id);
+    console.log('Home Page - userId from context:', userId);
 
     useEffect(() => {
         const fetchPosts = async () => {
+            // If no logged-in user, skip fetching personalized posts
+            if (!userId) {
+                setShowPosts([]);
+                return;
+            }
+
             try {
                 const response = await axios.get('http://localhost:8000/home/posts', {
-                    params: { days: maxDaysLimit, userId: user.id },
+                    params: { days: maxDaysLimit, userId },
                     withCredentials: true,
                 });
 
@@ -52,7 +59,7 @@ function Home() {
         }
 
         fetchPosts();
-    }, [maxDaysLimit])
+    }, [maxDaysLimit, userId])
 
     return(
         <div className="Home">

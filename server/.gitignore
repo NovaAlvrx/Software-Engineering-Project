@@ -6,3 +6,6 @@ __pycache__/
 # virtual environment
 venv/
 .env
+.venv # if not already there
+server/.venv/
+.venv/
