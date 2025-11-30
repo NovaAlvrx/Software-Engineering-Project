@@ -27,9 +27,8 @@ function SignUp() {
       formData.append('password', password);
 
       try {
-          const response = await axios.post('http://localhost:8000/auth/sign-up', formData, { withCredentials: true })
+          await axios.post('http://localhost:8000/auth/sign-up', formData, { withCredentials: true })
           .then(() => navigate('/'));
-          console.log('Sign-up successful:', response.data);
 
       } catch (error) {
           // send to 404 page or show error message

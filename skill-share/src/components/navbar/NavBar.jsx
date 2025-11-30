@@ -4,10 +4,13 @@ import search from '../../assets/icons/search.png'
 import home from '../../assets/icons/home.png'
 import message from '../../assets/icons/messages.png'
 import more from '../../assets/icons/more.png'
+import exchange from '../../assets/icons/exchange.svg'
 import './NavBar.css'
-import { useState, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { UserContext } from "../../context/UserContext.jsx";
+import SkillSwapLogo from '../../assets/img/SkillSwap_logo4.png'
 
 /**
  * Add additional functionality to NavBar such as:
@@ -17,48 +20,30 @@ import axios from 'axios'
  */
 
 function NavBar() {
-    // Current logged-in user (replace with actual auth context later)
-    const [currentUser, setCurrentUser] = useState(null);
-    const [userId, setUserId] = useState(null)
+    const user = useContext(UserContext);  
     const [showMore, setShowMore] = useState(false);
+    const username = user ? `${user.fName} ${user.lName}` : null;
+    const userPic = user ? user.profile_picture : profile;
 
     const navigate = useNavigate()
-    
-    // Fetch logged-in user's data
-    useEffect(() => {
-        const fetchCurrentUser = async () => {
-            try {
-                const token = localStorage.getItem('access_token');
-                if (!token) return;
 
-                const response = await axios.get('http://localhost:8000/auth/me', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                    withCredentials: true
-                });
-
-                const userData = response.data
-                setCurrentUser(userData.fName + ' ' + userData.lName);
-                setUserId(userData.id);
-                console.log('user id: ', userId)
-            } catch (error) {
-                console.error('Error fetching current user:', error);
-            }
-        };
-        
-        fetchCurrentUser();
-    }, [userId]);
-
-    const onClickLogout = () => {
-        localStorage.removeItem('access_token');
-        navigate('/login');
+    const onClickLogout = async () => {
+        try {
+            await axios.post('http://localhost:8000/auth/logout', {},
+            { 
+                withCredentials: true 
+            });
+        } catch (e) {
+            console.error('Logout error:', e);
+        } finally {
+            navigate('/login');
+        }
     }
 
     return (
         <nav className="navbar">
-            <div className="nav-logo flex-column-center">
-                Skill <br/> Swap
+            <div className="nav-logo flex-column-center-start">
+                <img src={SkillSwapLogo} alt='logo'/>
             </div>
 
             <div className="nav-links">
@@ -70,6 +55,10 @@ function NavBar() {
                     <img src={search} alt="Search" />
                     <span>Explore</span>
                 </Link>
+                <Link to="/trade" className="nav-item">
+                    <img src={exchange} alt="Trade" />
+                    <span>Trade</span>
+                </Link>
                 <Link to="/create" className="nav-item">
                     <img src={create} alt="Create" />
                     <span>Create</span>
@@ -79,9 +68,9 @@ function NavBar() {
                     <span>Messages</span>
                 </Link>
 
-                <Link to={currentUser ? `/profile/${userId}` : "/login"} className="nav-item">
-                    <img src={profile} alt="Profile" className="nav-item" />
-                    <span>{currentUser || "Login"}</span>
+                <Link to={user ? `/profile/${user.id}` : "/login"} className="nav-item">
+                    <img src={userPic} alt="Profile" className="user-profile"/>
+                    <span>{username || 'Login'}</span>
                 </Link>
             </div>
 

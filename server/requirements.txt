@@ -1,5 +1,11 @@
 fastapi==0.115.0
 uvicorn[standard]==0.31.0
+boto3==1.34.162
+passlib[argon2]==1.7.4
+prisma==0.15.0
+PyJWT==2.9.0
+python-dotenv==1.0.1
+python-multipart==0.0.9
 pytest==8.0.0
 httpx==0.27.0
 requests==2.31.0

@@ -18,13 +18,16 @@ function Login() {
 
       try {
           const response = await axios.post('http://localhost:8000/auth/token', formData, { withCredentials: true})
-          localStorage.setItem('access_token', response.data.access_token);
-          navigate('/');
-          console.log('Login successful');
+          
+          if (response.status === 200) {         
+            console.log('Login successful');
+            navigate('/');
+          } else {
+            console.error('Login failed');
+          }
       } catch (error) {
           console.error('Error during login:', error);
       }
-        
   }
 
   return (
