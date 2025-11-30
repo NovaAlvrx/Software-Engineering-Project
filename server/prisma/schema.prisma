@@ -132,6 +132,10 @@ model Exchange {
     exchangeId   Int            @id @default(autoincrement())
     userOneId    Int
     userTwoId    Int
+    offer        String?
+    request      String?
+    availability String?
+    message      String?
 
     sender       UserProfile @relation("sentExchanges", fields: [userOneId], references: [userId])
     receiver     UserProfile @relation("receivedExchanges", fields: [userTwoId], references: [userId])
