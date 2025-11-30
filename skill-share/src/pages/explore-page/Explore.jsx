@@ -44,7 +44,6 @@ function Explore() {
         <button onClick={handleSearch}>Search</button>
       </div>
 
-      <p>Am i being shown?</p>
 
       {activeSearch && displayPosts.length === 0 ? (
         <p className="no-results">No results found for “{activeSearch}”.</p>

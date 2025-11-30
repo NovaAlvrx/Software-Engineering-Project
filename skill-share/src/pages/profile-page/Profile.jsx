@@ -1,8 +1,8 @@
 import './Profile.css'
-import NavBar from '../../components/navbar/NavBar'
 import { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Loading from '../../components/Loading/Loading'
 
 function Profile() {
     const { id } = useParams();
@@ -174,9 +174,8 @@ function Profile() {
     if (loading) {
         return (
             <div className="profile-container">
-                <NavBar />
                 <div className="profile">
-                    <p style={{ textAlign: 'center', marginTop: '50px' }}>Loading profile...</p>
+                    <Loading />
                 </div>
             </div>
         );

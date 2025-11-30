@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException, Form, Depends, status, Response
+from fastapi import APIRouter, HTTPException, Form, Depends, status, Response, Cookie
+from fastapi.responses import JSONResponse
+from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 from services.auth_services import register_user
 from services.auth_services import authenticate_user, get_current_user, create_token
-from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -27,6 +28,8 @@ async def sign_up(first_name: Annotated[str, Form()],
             value=access_token,
             httponly=True,
             max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60, # in seconds
+            samesite="lax",
+            domain="localhost"
         )
         
         return {"message": "User registered successfully"}
@@ -50,13 +53,43 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
 
         print('Generated access token:', access_token)
 
-        return {"access_token": access_token, "token_type": "bearer"}
+        response = JSONResponse(content={"message": "Login successful"})
+
+        response.set_cookie(
+            key="access_token",
+            value=access_token,
+            httponly=True,
+            max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+            samesite="lax",
+            path="/",
+            domain="localhost"
+        )
+
+        return response
+
     except Exception as e:
         print("Unexpected error during login:", e)
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 @router.get("/me")
-async def read_users_me(current_user: str = Depends(get_current_user)):
-    print('Recieved token')
-    return current_user
+async def read_users_me(access_token: str = Cookie(None)):
+    if not access_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    try:
+        payload = await get_current_user(access_token)
+        return payload
+    except Exception as e:
+        print("Error validating token in /me endpoint:", e)
+        raise HTTPException(status_code=401, detail="Could not validate credentials")
     
+
+@router.post("/logout")
+async def logout(response: Response):
+    response.delete_cookie(
+        key="access_token",
+        domain="localhost",
+        samesite="lax",
+        path="/"
+    )
+    return {"message": "Logged out successfully"}

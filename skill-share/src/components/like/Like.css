@@ -1,0 +1,10 @@
+.Like {
+    height: 100%;
+}
+
+.like-button {
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1;
+    cursor: pointer;
+}

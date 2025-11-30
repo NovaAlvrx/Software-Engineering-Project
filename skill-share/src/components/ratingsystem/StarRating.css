@@ -1,0 +1,15 @@
+/* --- StarRating.css Content --- */
+.star-rating-input {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.star-rating-input input[type="radio"] {
+    display: none; /* Hide the default radio button */
+}
+
+.star-icon {
+    cursor: pointer;
+    transition: color 0.2s;
+}

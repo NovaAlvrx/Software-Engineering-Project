@@ -1,5 +1,5 @@
 .navbar {
-    height: 95vh;
+    height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -11,17 +11,19 @@
     background-color: white;
 }
 
-.flex-column-center {
+.flex-column-center-start {
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: center;
 }
 
 .nav-logo {
     height: 15%;
+    width: 70%;
+}
 
-    font-size: 36px;
-    color: black;
+.nav-logo img{
+    width: 100%;
 }
 
 .nav-links {
@@ -37,22 +39,30 @@
     align-items: center;
     text-decoration: none;
     font-size: 18px;
-    margin: 20px 0;
+    padding: 15px 10px;
+    margin: 5px 20px 5px 0px;
     gap: 16px;
+    max-height: 50%;
+    font-weight: 450;
 }
 
 .nav-item img {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
 }
 
 .nav-item span {
     color: black;
 }
 
+.nav-item:hover {
+    background-color: #e7e7e7da;
+    border-radius: 0.8rem;
+    cursor: pointer;
+}
+
 .profile-img {
-    width: 24px;
-    height: 24px;
     border-radius: 50%;
     border: 1px solid #dbdbdb;
 }
@@ -61,6 +71,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    margin-bottom: 20%;
 }
 
 .more-items {
@@ -91,4 +102,12 @@
 
 .more-item:hover {
     text-decoration: underline;
+}
+
+.user-profile {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #dbdbdb;
 }
