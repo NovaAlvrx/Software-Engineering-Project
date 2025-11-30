@@ -1,8 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useContext } from 'react';
 import './Trade.css';
+import axios from 'axios';
+import { UserContext } from '../context/UserContext.jsx';
+
+const API_BASE = 'http://localhost:8000';
 
 const contacts = [
   {
+    userId: 2,
     username: 'Maria_Ferdous_1',
     name: 'Maria Ferdous',
     avatar: 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg',
@@ -11,6 +16,7 @@ const contacts = [
     availability: 'Weekends',
   },
   {
+    userId: 3,
     username: 'Noah_Alvarez_1',
     name: 'Noah Alvarez',
     avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3CTw87kjAiRHrKO-IvKZtBI76VuTKcgKWeA&s',
@@ -19,6 +25,7 @@ const contacts = [
     availability: 'Weeknights',
   },
   {
+    userId: 4,
     username: 'Gerardo_Rivera_1',
     name: 'Gerardo Rivera',
     avatar: 'https://cdn.pixabay.com/photo/2022/08/17/15/46/labrador-7392840_640.jpg',
@@ -27,6 +34,7 @@ const contacts = [
     availability: 'Flexible',
   },
   {
+    userId: 5,
     username: 'Suzuna_Kimura_1',
     name: 'Suzuna Kimura',
     avatar: 'https://images6.alphacoders.com/337/thumb-1920-337780.jpg',
@@ -36,7 +44,7 @@ const contacts = [
   },
 ];
 
-const initialIncomingRequests = [
+const sampleIncomingRequests = [
   {
     id: 1,
     username: 'Maria_Ferdous_1',
@@ -44,32 +52,12 @@ const initialIncomingRequests = [
     request: 'React Mentorship (2 sessions)',
     availability: 'Saturdays • 10 AM PST',
     message: 'I can show you my portrait lighting setup and would love help brushing up on React hooks.',
-    status: 'pending',
+    status: 'PENDING',
     sent: '2h ago',
-  },
-  {
-    id: 2,
-    username: 'Noah_Alvarez_1',
-    offer: 'Python Automation Deep Dive',
-    request: 'Product Photography Critiques',
-    availability: 'Weeknights • 7 PM CST',
-    message: 'Happy to walk through two automation projects in exchange for feedback on my photography portfolio.',
-    status: 'pending',
-    sent: 'Yesterday',
-  },
-  {
-    id: 3,
-    username: 'Suzuna_Kimura_1',
-    offer: 'Creative Direction Feedback',
-    request: 'Node.js Pairing',
-    availability: 'Thursdays • 9 AM JST',
-    message: 'Could you pair on my Node API refactor? I will prepare reference boards for you.',
-    status: 'accepted',
-    sent: 'This week',
   },
 ];
 
-const initialOutgoingRequests = [
+const sampleOutgoingRequests = [
   {
     id: 101,
     username: 'Gerardo_Rivera_1',
@@ -77,18 +65,8 @@ const initialOutgoingRequests = [
     request: 'Game Design Brainstorm',
     availability: 'Flexible',
     message: 'I can review your UX flows asynchronously if we can hop on a game design call next week.',
-    status: 'pending',
+    status: 'PENDING',
     sent: '4h ago',
-  },
-  {
-    id: 102,
-    username: 'Maria_Ferdous_1',
-    offer: 'Web Accessibility Audit',
-    request: 'Food Styling Lessons',
-    availability: 'Weekends',
-    message: 'Trying to improve my food photography composition. Happy to share my accessibility checklist.',
-    status: 'declined',
-    sent: 'Last week',
   },
 ];
 
@@ -100,10 +78,10 @@ const currentUserSkills = [
 ];
 
 const statusLabels = {
-  pending: 'Awaiting response',
-  accepted: 'Exchange confirmed',
-  declined: 'Declined',
-  withdrawn: 'Withdrawn',
+  PENDING: 'Awaiting response',
+  ACCEPTED: 'Exchange confirmed',
+  DECLINED: 'Declined',
+  COMPLETED: 'Completed',
 };
 
 const tabs = [
@@ -113,8 +91,9 @@ const tabs = [
 ];
 
 function Trade() {
-  const [incomingRequests, setIncomingRequests] = useState(initialIncomingRequests);
-  const [outgoingRequests, setOutgoingRequests] = useState(initialOutgoingRequests);
+  const user = useContext(UserContext);
+  const [incomingRequests, setIncomingRequests] = useState([]);
+  const [outgoingRequests, setOutgoingRequests] = useState([]);
   const [proposalForm, setProposalForm] = useState({
     username: '',
     offerSkill: '',
@@ -124,20 +103,57 @@ function Trade() {
   });
   const [feedback, setFeedback] = useState('');
   const [activeTab, setActiveTab] = useState('incoming');
+  const [loadingTrades, setLoadingTrades] = useState(false);
+
+  useEffect(() => {
+    if (!user?.id) {
+      setIncomingRequests(sampleIncomingRequests);
+      setOutgoingRequests(sampleOutgoingRequests);
+      return;
+    }
+
+    const fetchTrades = async () => {
+      setLoadingTrades(true);
+      try {
+        const { data } = await axios.get(`${API_BASE}/trade`, { withCredentials: true });
+        const mapTrade = (t) => ({
+          id: t.id,
+          contactId: t.otherUser?.id,
+          username: t.otherUser?.name || `User ${t.otherUser?.id ?? ''}`,
+          offer: t.offer || 'Offer not specified',
+          request: t.request || 'Request not specified',
+          availability: t.availability || 'Flexible',
+          message: t.message || '',
+          status: (t.status || 'PENDING').toUpperCase(),
+          sent: t.sentAt ? new Date(t.sentAt).toLocaleString() : 'Recently',
+          avatar: t.otherUser?.profilePicture,
+        });
+        setIncomingRequests((data.incoming || []).map(mapTrade));
+        setOutgoingRequests((data.outgoing || []).map(mapTrade));
+      } catch (error) {
+        console.error('Failed to load trades:', error);
+        setFeedback('Could not load trades. Please ensure you are logged in.');
+      } finally {
+        setLoadingTrades(false);
+      }
+    };
+
+    fetchTrades();
+  }, [user?.id]);
 
   const pendingIncoming = useMemo(
-    () => incomingRequests.filter((request) => request.status === 'pending').length,
+    () => incomingRequests.filter((request) => request.status === 'PENDING').length,
     [incomingRequests],
   );
 
   const pendingOutgoing = useMemo(
-    () => outgoingRequests.filter((request) => request.status === 'pending').length,
+    () => outgoingRequests.filter((request) => request.status === 'PENDING').length,
     [outgoingRequests],
   );
 
   const successfulTrades = useMemo(() => {
-    const fromIncoming = incomingRequests.filter((request) => request.status === 'accepted').length;
-    const fromOutgoing = outgoingRequests.filter((request) => request.status === 'accepted').length;
+    const fromIncoming = incomingRequests.filter((request) => request.status === 'ACCEPTED').length;
+    const fromOutgoing = outgoingRequests.filter((request) => request.status === 'ACCEPTED').length;
     return fromIncoming + fromOutgoing;
   }, [incomingRequests, outgoingRequests]);
 
@@ -156,7 +172,8 @@ function Trade() {
     [],
   );
 
-  const lookupContact = (username) => contacts.find((contact) => contact.username === username);
+  const lookupContact = (identifier) =>
+    contacts.find((contact) => contact.username === identifier || contact.userId === Number(identifier));
 
   const tabHelper = {
     incoming: `${pendingIncoming} awaiting reply`,
@@ -164,41 +181,62 @@ function Trade() {
     history: `${outgoingRequests.length} sent`,
   };
 
-  const handleDecision = (requestId, decision) => {
-    setIncomingRequests((previous) =>
-      previous.map((request) =>
-        request.id === requestId
-          ? {
-              ...request,
-              status: decision,
-            }
-          : request,
-      ),
-    );
-
-    const contact = lookupContact(
-      incomingRequests.find((request) => request.id === requestId)?.username || '',
-    );
-
-    setFeedback(
-      decision === 'accepted'
-        ? `Trade confirmed with ${contact?.name || 'this user'}! Check your messages to coordinate details.`
-        : `You declined ${contact?.name || 'this user'}'s exchange.`,
-    );
+  const handleDecision = async (requestId, decision) => {
+    const statusValue = decision.toUpperCase();
+    try {
+      await axios.patch(
+        `${API_BASE}/trade/${requestId}`,
+        { status: statusValue },
+        { withCredentials: true },
+      );
+      setIncomingRequests((previous) =>
+        previous.map((request) =>
+          request.id === requestId
+            ? {
+                ...request,
+                status: statusValue,
+              }
+            : request,
+        ),
+      );
+      const contact = lookupContact(
+        incomingRequests.find((request) => request.id === requestId)?.contactId ||
+          incomingRequests.find((request) => request.id === requestId)?.username ||
+          '',
+      );
+      setFeedback(
+        statusValue === 'ACCEPTED'
+          ? `Trade confirmed with ${contact?.name || 'this user'}! Check your messages to coordinate details.`
+          : `You declined ${contact?.name || 'this user'}'s exchange.`,
+      );
+    } catch (error) {
+      console.error('Failed to update trade status:', error);
+      setFeedback('Could not update trade. Please try again.');
+    }
   };
 
-  const handleWithdraw = (requestId) => {
-    setOutgoingRequests((previous) =>
-      previous.map((request) =>
-        request.id === requestId
-          ? {
-              ...request,
-              status: 'withdrawn',
-            }
-          : request,
-      ),
-    );
-    setFeedback('Trade proposal withdrawn. You can always send a fresh idea.');
+  const handleWithdraw = async (requestId) => {
+    try {
+      await axios.patch(
+        `${API_BASE}/trade/${requestId}`,
+        { status: 'DECLINED' },
+        { withCredentials: true },
+      );
+      setOutgoingRequests((previous) =>
+        previous.map((request) =>
+          request.id === requestId
+            ? {
+                ...request,
+                status: 'DECLINED',
+              }
+            : request,
+        ),
+      );
+      setFeedback('Trade proposal withdrawn. You can always send a fresh idea.');
+    } catch (error) {
+      console.error('Failed to withdraw trade:', error);
+      setFeedback('Could not withdraw trade. Please try again.');
+    }
   };
 
   const handleFormChange = (field, value) => {
@@ -211,7 +249,7 @@ function Trade() {
   const handlePrefillProposal = (contact) => {
     const matchedSkill = contact.lookingFor.find((skill) => currentUserSkills.includes(skill));
     setProposalForm({
-      username: contact.username,
+      username: contact.userId?.toString() || contact.username,
       offerSkill: matchedSkill || contact.lookingFor[0] || '',
       requestSkill: contact.skillsOffered[0] || '',
       availability: contact.availability || '',
@@ -220,34 +258,59 @@ function Trade() {
     setFeedback(`Prefilled proposal details for ${contact.name}. Personalize the note before sending!`);
   };
 
-  const handleProposalSubmit = (event) => {
+  const handleProposalSubmit = async (event) => {
     event.preventDefault();
     if (!proposalForm.username || !proposalForm.offerSkill || !proposalForm.requestSkill) {
       setFeedback('Please choose a user and describe both skills involved before sending the proposal.');
       return;
     }
 
-    const contact = lookupContact(proposalForm.username);
-    const newRequest = {
-      id: Date.now(),
-      username: proposalForm.username,
-      offer: proposalForm.offerSkill,
-      request: proposalForm.requestSkill,
-      availability: proposalForm.availability || 'Flexible',
-      message: proposalForm.note || 'Excited to trade skills!',
-      status: 'pending',
-      sent: 'Just now',
-    };
+    const recipientId = Number(proposalForm.username);
+    if (Number.isNaN(recipientId)) {
+      setFeedback('Please select a valid user to send a trade request.');
+      return;
+    }
 
-    setOutgoingRequests((previous) => [newRequest, ...previous]);
-    setProposalForm({
-      username: '',
-      offerSkill: '',
-      requestSkill: '',
-      availability: '',
-      note: '',
-    });
-    setFeedback(`Trade proposal sent to ${contact?.name || 'the selected user'}!`);
+    const contact = lookupContact(proposalForm.username);
+    try {
+      const { data } = await axios.post(
+        `${API_BASE}/trade`,
+        {
+          recipientId,
+          offer: proposalForm.offerSkill,
+          request: proposalForm.requestSkill,
+          availability: proposalForm.availability || 'Flexible',
+          message: proposalForm.note || 'Excited to trade skills!',
+        },
+        { withCredentials: true },
+      );
+
+      const newRequest = {
+        id: data.id,
+        contactId: recipientId,
+        username: contact?.name || `User ${recipientId}`,
+        offer: proposalForm.offerSkill,
+        request: proposalForm.requestSkill,
+        availability: proposalForm.availability || 'Flexible',
+        message: proposalForm.note || 'Excited to trade skills!',
+        status: (data.status || 'PENDING').toUpperCase(),
+        sent: 'Just now',
+        avatar: contact?.avatar,
+      };
+
+      setOutgoingRequests((previous) => [newRequest, ...previous]);
+      setProposalForm({
+        username: '',
+        offerSkill: '',
+        requestSkill: '',
+        availability: '',
+        note: '',
+      });
+      setFeedback(`Trade proposal sent to ${contact?.name || 'the selected user'}!`);
+    } catch (error) {
+      console.error('Failed to send trade proposal:', error);
+      setFeedback('Could not send trade proposal. Please ensure you are logged in.');
+    }
   };
 
   return (
@@ -316,16 +379,17 @@ function Trade() {
               )}
 
               {incomingRequests.map((request) => {
-                const contact = lookupContact(request.username);
+                const contact = lookupContact(request.contactId ?? request.username);
+                const displayName = contact?.name || request.username;
                 return (
-                  <article key={request.id} className={`trade-card ${request.status}`}>
+                  <article key={request.id} className={`trade-card ${request.status.toLowerCase()}`}>
                     <div className="trade-card-header">
-                      <div className="avatar" style={{ backgroundImage: `url(${contact?.avatar})` }} />
+                      <div className="avatar" style={{ backgroundImage: `url(${contact?.avatar || request.avatar})` }} />
                       <div>
-                        <h3>{contact?.name || request.username}</h3>
+                        <h3>{displayName}</h3>
                         <p className="small-text">{request.sent}</p>
                       </div>
-                      <span className={`status-pill ${request.status}`}>{statusLabels[request.status]}</span>
+                      <span className={`status-pill ${request.status.toLowerCase()}`}>{statusLabels[request.status]}</span>
                     </div>
 
                     <div className="trade-card-body">
@@ -342,7 +406,7 @@ function Trade() {
                     <p className="trade-note">{request.message}</p>
                     <p className="trade-availability">Preferred timing: {request.availability}</p>
 
-                    {request.status === 'pending' ? (
+                    {request.status === 'PENDING' ? (
                       <div className="trade-actions">
                         <button type="button" className="secondary" onClick={() => handleDecision(request.id, 'declined')}>
                           Decline
@@ -375,8 +439,8 @@ function Trade() {
                   <select value={proposalForm.username} onChange={(event) => handleFormChange('username', event.target.value)}>
                     <option value="">Select a user</option>
                     {contacts.map((contact) => (
-                      <option key={contact.username} value={contact.username}>
-                        {contact.name} • offers {contact.skillsOffered[0]}
+                      <option key={contact.username} value={contact.userId}>
+                        {contact.name} (id: {contact.userId}) • offers {contact.skillsOffered[0]}
                       </option>
                     ))}
                   </select>
@@ -468,16 +532,17 @@ function Trade() {
               )}
 
               {outgoingRequests.map((request) => {
-                const contact = lookupContact(request.username);
+                const contact = lookupContact(request.contactId ?? request.username);
+                const displayName = contact?.name || request.username;
                 return (
-                  <article key={request.id} className={`trade-card ${request.status}`}>
+                  <article key={request.id} className={`trade-card ${request.status.toLowerCase()}`}>
                     <div className="trade-card-header">
-                      <div className="avatar" style={{ backgroundImage: `url(${contact?.avatar})` }} />
+                      <div className="avatar" style={{ backgroundImage: `url(${contact?.avatar || request.avatar})` }} />
                       <div>
-                        <h3>{contact?.name || request.username}</h3>
+                        <h3>{displayName}</h3>
                         <p className="small-text">{request.sent}</p>
                       </div>
-                      <span className={`status-pill ${request.status}`}>{statusLabels[request.status]}</span>
+                      <span className={`status-pill ${request.status.toLowerCase()}`}>{statusLabels[request.status]}</span>
                     </div>
                     <div className="trade-card-body">
                       <div className="trade-skill-block">
@@ -491,7 +556,7 @@ function Trade() {
                     </div>
                     <p className="trade-note">{request.message}</p>
                     <p className="trade-availability">Availability: {request.availability}</p>
-                    {request.status === 'pending' && (
+                    {request.status === 'PENDING' && (
                       <div className="trade-actions">
                         <button type="button" className="secondary" onClick={() => handleWithdraw(request.id)}>
                           Withdraw
