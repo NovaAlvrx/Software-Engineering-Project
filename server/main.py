@@ -24,7 +24,10 @@ app.include_router(trade_routes.router)
 # Add CORS middleware to allow frontend to call backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Vite default port
+    allow_origins=[
+        "http://localhost:5173",        # Vite default port (hostname)
+        "http://127.0.0.1:5173",        # Vite when accessed via loopback IP
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

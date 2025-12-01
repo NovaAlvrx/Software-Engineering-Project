@@ -91,3 +91,28 @@ async def get_post(userId: int, postId: int):
         return {"post_data": post_data}
     except Exception as e:
         print('Error fetching post', e)
+        return None
+
+
+@router.get('/list')
+async def list_users(exclude_id: Optional[int] = None):
+    """
+    Return basic info for all users so the trade UI can show a real list of recipients.
+    """
+    try:
+        users = await db.user.find_many(include={"profile": True})
+        shaped = []
+        for user in users:
+            if exclude_id is not None and user.userId == exclude_id:
+                continue
+            shaped.append(
+                {
+                    "id": user.userId,
+                    "name": f"{user.fName} {user.lName}".strip(),
+                    "profilePicture": getattr(user.profile, "profile_picture", None) if user.profile else None,
+                }
+            )
+        return {"users": shaped}
+    except Exception as e:
+        print('Error listing users: ', e)
+        raise HTTPException(status_code=500, detail="Unable to load users")
