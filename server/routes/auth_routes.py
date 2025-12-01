@@ -28,8 +28,7 @@ async def sign_up(first_name: Annotated[str, Form()],
             value=access_token,
             httponly=True,
             max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60, # in seconds
-            samesite="lax",
-            domain="localhost"
+            samesite="lax"
         )
         
         return {"message": "User registered successfully"}
@@ -61,8 +60,7 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
             httponly=True,
             max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60,
             samesite="lax",
-            path="/",
-            domain="localhost"
+            path="/"
         )
 
         return response
@@ -88,7 +86,6 @@ async def read_users_me(access_token: str = Cookie(None)):
 async def logout(response: Response):
     response.delete_cookie(
         key="access_token",
-        domain="localhost",
         samesite="lax",
         path="/"
     )

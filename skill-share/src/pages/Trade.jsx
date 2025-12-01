@@ -5,7 +5,7 @@ import { UserContext } from '../context/UserContext.jsx';
 
 const API_BASE = 'http://localhost:8000';
 
-const contacts = [
+const fallbackContacts = [
   {
     userId: 2,
     username: 'Maria_Ferdous_1',
@@ -92,6 +92,7 @@ const tabs = [
 
 function Trade() {
   const user = useContext(UserContext);
+  const [contacts, setContacts] = useState(fallbackContacts);
   const [incomingRequests, setIncomingRequests] = useState([]);
   const [outgoingRequests, setOutgoingRequests] = useState([]);
   const [proposalForm, setProposalForm] = useState({
@@ -141,6 +142,38 @@ function Trade() {
     fetchTrades();
   }, [user?.id]);
 
+  useEffect(() => {
+    if (!user?.id) {
+      setContacts(fallbackContacts);
+      return;
+    }
+
+    const fetchContacts = async () => {
+      try {
+        const { data } = await axios.get(`${API_BASE}/users/list`, {
+          params: { exclude_id: user.id },
+          withCredentials: true,
+        });
+
+        const mapped = (data?.users || []).map((u) => ({
+          userId: u.id,
+          username: u.id?.toString(),
+          name: u.name || `User ${u.id}`,
+          avatar: u.profilePicture,
+          skillsOffered: ['Skills available to share'],
+          lookingFor: ['Open to new skills'],
+          availability: 'Flexible',
+        }));
+        setContacts(mapped);
+      } catch (error) {
+        console.error('Failed to load users for trade:', error);
+        setContacts([]);
+      }
+    };
+
+    fetchContacts();
+  }, [user?.id]);
+
   const pendingIncoming = useMemo(
     () => incomingRequests.filter((request) => request.status === 'PENDING').length,
     [incomingRequests],
@@ -169,7 +202,7 @@ function Trade() {
         })
         .filter((contact) => !!contact.overlappingSkill)
         .slice(0, 3),
-    [],
+    [contacts],
   );
 
   const lookupContact = (identifier) =>
